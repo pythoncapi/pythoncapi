@@ -1,10 +1,11 @@
 .. _pep:
 
-++++++++++++++++++++++++++++++++++++++++
-Hide implementation details of the C API
-++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Hide implementation details of the C API (old draft PEP)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-PEP written at 31-May-2017, no update since May 2017.
+This page is a old draft for a PEP, written at 31-May-2017; no update since May
+2017.
 
 PEP headers::
 

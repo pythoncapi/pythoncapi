@@ -17,7 +17,7 @@ What is the Python C API?
 * Control flow
 
   * Generator
-  * Exception
+  * Exception: ``PyErr_SetString()``, ``PyErr_Clear()``
 
 Current Python C API
 ====================

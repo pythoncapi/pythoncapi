@@ -1,6 +1,8 @@
-++++++++++++++++++++
-Python C stable ABI?
-++++++++++++++++++++
+.. _stable-abi:
+
+++++++++++++++++++
+Python stable ABI?
+++++++++++++++++++
 
 CPython Py_LIMITED_API
 ======================
