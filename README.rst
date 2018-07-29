@@ -9,4 +9,7 @@ Brainstorm to change the Python C API (to make it better):
 * `capi-sig mailing list
   <https://mail.python.org/mm3/mailman3/lists/capi-sig.python.org/>`_
 
-The current documentation can be found in the ``doc/`` subdirectory.
+Content:
+* ``doc/`` subdirectory: the current documentation
+* ``refcounts_borrowed.py``: search for functions returning a borrowed
+  reference from CPython ``Doc/data/refcounts.dat`` file.

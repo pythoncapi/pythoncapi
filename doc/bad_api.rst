@@ -16,35 +16,48 @@ The C API must not leak implementation details anymore.
 Borrowed references
 ===================
 
-Borrowed references: Too many functions :-(
+CPython 3.7 has 36 functions and macros which return borrowed references:
 
-CPython contains ``Doc/data/refcounts.dat`` which documents how functions
-handle reference count. This file is edited manually.
+* ``PyCell_GET()``
+* ``PyDict_GetItem()``
+* ``PyDict_GetItemWithError()``
+* ``PyDict_GetItemString()``
+* ``PyDict_SetDefault()``
+* ``PyErr_Occurred()``
+* ``PyEval_GetBuiltins()``
+* ``PyFile_Name()``
+* ``PyFunction_GetClosure()``
+* ``PyFunction_GetCode()``
+* ``PyFunction_GetDefaults()``
+* ``PyFunction_GetGlobals()``
+* ``PyFunction_GetModule()``
+* ``Py_InitModule()``
+* ``Py_InitModule3()``
+* ``Py_InitModule4()``
+* ``PyImport_GetModuleDict()``
+* ``PyList_GET_ITEM()``
+* ``PyList_GetItem()``
+* ``PyMethod_Class()``
+* ``PyMethod_Function()``
+* ``PyMethod_GET_CLASS()``
+* ``PyMethod_GET_FUNCTION()``
+* ``PyMethod_GET_SELF()``
+* ``PyMethod_Self()``
+* ``PyModule_GetDict()``
+* ``PyNumber_Check()``
+* ``PyObject_Init()``
+* ``PySequence_Fast_GET_ITEM()``
+* ``PySys_GetObject()``
+* ``PySys_GetXOptions()``
+* ``PyThreadState_GetDict()``
+* ``PyTuple_GET_ITEM()``
+* ``PyTuple_GetItem()``
+* ``PyWeakref_GET_OBJECT()``
+* ``PyWeakref_GetObject()``
 
-Attempt to list them:
+CPython contains ``Doc/data/refcounts.dat`` (file is edited manually) which
+documents how functions handle reference count.
 
-  * ``PyCell_GET()``
-  * ``PyDict_GetItem()``
-  * ``PyDict_GetItemWithError()``
-  * ``PyDict_GetItemString()``
-  * ``PyDict_SetDefault()``
-  * ``PyErr_Occurred()``
-  * ``PyEval_GetBuiltins()``
-  * ``PyEval_GetLocals()``
-  * ``PyEval_GetGlobals()``
-  * ``PyEval_GetFrame()``
-  * ``PyFunction_GetClosure()``
-  * ``Py_InitModule()``
-  * ``PyImport_GetModuleDict()``
-  * ``PyList_GET_ITEM()``
-  * ``PyList_GetItem()``
-  * ``PyMethod_GET_SELF()``
-  * ``PySequence_Fast_GET_ITEM()``
-  * ``PySys_GetObject()``
-  * ``PyThreadState_GetDict()``
-  * ``PyTuple_GET_ITEM()``
-  * ``PyTuple_GetItem()``
-  * ``PyWeakref_GetObject()``
 
 ``PyObject**``
 ==============
