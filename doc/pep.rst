@@ -71,7 +71,7 @@ of CPython are hardcoded in this API:
 PyPy
 ----
 
-PyPy uses more efficient structures and use a more efficient garbage
+PyPy uses more efficient structures and uses a more efficient garbage
 collector without reference counting. Thanks to that (but also many
 other optimizations), PyPy succeeded to run Python code up to 5x faster
 than CPython.
