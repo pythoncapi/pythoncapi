@@ -1,8 +1,8 @@
-+++++++++++++++++++++++++
-Design a C API for Python
-+++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++
+Design a new better C API for Python
+++++++++++++++++++++++++++++++++++++
 
-Subtitle: "make the stable API usable".
+Subtitle: "Make the stable API usable".
 
 Pages
 =====
