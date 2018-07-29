@@ -107,7 +107,7 @@ C structures
 
 Don't leak the structures like ``PyObject`` or ``PyTupleObject`` to not
 access directly fields, to not use fixed offset at the ABI level. Replace
-macros with functions calls. PyPy already this in its C API (``cpyext``).
+macros with functions calls. PyPy already does this in its C API (``cpyext``).
 
 Integer overflow
 ================
@@ -124,7 +124,7 @@ Open questions
 Reference counting
 ------------------
 
-Sshould we do something for reference counting, Py_INCREF and Py_DECREF?
+Should we do something for reference counting, Py_INCREF and Py_DECREF?
 Replace them with function calls at least?
 
 ``PyObject_CallFunction("O")``
