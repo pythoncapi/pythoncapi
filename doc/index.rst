@@ -6,6 +6,22 @@ Bad title: "new API".
 
 Good title: "make the stable API usable".
 
+Brainstorm to change the Python C API (to make it better):
+
+* `Python C API <https://pythoncapi.readthedocs.io/>`_ (this documentation)
+* `pythoncapi GitHub project <https://github.com/vstinner/pythoncapi/>`_
+  (this documentation can be found in the ``doc/`` subdirectory).
+* `capi-sig mailing list
+  <https://mail.python.org/mm3/mailman3/lists/capi-sig.python.org/>`_
+
+Pages
+=====
+
+.. toctree::
+   :maxdepth: 2
+
+   pep
+
 Status
 ======
 
@@ -15,14 +31,21 @@ Status
   the PEP has no number and was not accepted yet (nor really proposed).
 
 
-PEP draft
-=========
+Players
+=======
 
-`PEP xxx: Hide implementation details of the C API
-<https://github.com/vstinner/misc/blob/master/python/pep_c_api.rst>`_.
+* CPython: Victor Stinner
+* Cython: Stefan Behnel
+* PyPy: Ronan Lamy
 
-Written at 31-May-2017, it wasn't updated since May 2017.
+Unknown status:
 
+* MicroPython?
+* IronPython?
+* Jython?
+* Pyjion
+* Pyston
+* any other?
 
 Timeline
 ========
