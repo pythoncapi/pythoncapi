@@ -10,6 +10,12 @@ implement new optimizations.
 
 See :ref:`Experimental runtime <exp-runtime>`.
 
+Remove debug checks
+===================
+
+See :ref:`Regular runtime <regular-runtime>`: since a debug runtime will be
+provided by default, many sanity checks can be removed from the release build.
+
 Change the garbage collector: unlikely
 ======================================
 

@@ -20,9 +20,10 @@ Regular Python: /usr/bin/python3
 * Python compiled in release mode
 * This runtime still provides ``Py_INCREF()`` macro:
   modify ``PyObject.ob_refcnt`` at the ABI level.
-* Should be fully compatible with :ref:`Python 3.7 C API <old-c-api>`
-* Should be fully compatible with Python 3.7 stable **ABI** (it may become
-  incompatible with the Python 3.7 full ABI).
+* Should be fully compatible with :ref:`old C API (Python 3.7 C API)
+  <old-c-api>`
+* Should be fully compatible with Python 3.7 :ref:`stable ABI <stable-abi>`
+  (it may become incompatible with the Python 3.7 full ABI).
 
 Compared to Python 3.7 regular runtime, this runtime no longer check its
 arguments for performance reasons. The debug runtime should now be preferred to

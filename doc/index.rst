@@ -32,11 +32,10 @@ Pages
    :maxdepth: 2
 
    roadmap
-   runtimes
-   old_c_api
    bad_api
    new_api
-   private_c_api
+   runtimes
+   old_c_api
    remove_functions
    optimization_ideas
    backward_compatibility

@@ -5,9 +5,9 @@ Backward compatibility
 ++++++++++++++++++++++
 
 To reduce the risk of failure, :ref:`changing the C API <new-c-api>` should be
-as much as possible compatible with the :ref:`Python 3.7 C API <old-c-api>`. One
-solution for that is to provide a backward compatible header file and/or
-library.
+as much as possible compatible with the :ref:`old C API (Python 3.7 C API)
+<old-c-api>`. One solution for that is to provide a backward compatible header
+file and/or library.
 
 Backward compatibility with Python 3.7 and older
 ================================================
