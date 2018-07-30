@@ -31,8 +31,12 @@ Non-goal
   development harder. Cython will still be able to access directly the full C
   API which includes implementation details and low-level "private" APIs.
 
+.. _impl-details:
+
 Hide implementation details
 ===========================
+
+See also :ref:`Bad C API <bad-c-api>`.
 
 What are implementation details?
 --------------------------------

@@ -79,7 +79,7 @@ The C API must not leak implementation details anymore
 
 **Goal:** Hide implementation details.
 
-See :ref:`Bad C API <bad-api>`.
+See :ref:`Bad C API <bad-c-api>`.
 
 
 Performance slowdown

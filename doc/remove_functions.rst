@@ -12,6 +12,8 @@ exposing so many functions is an issue: CPython has to keep backward
 compatibility, PyPy has to implement all these functions, etc. Third party
 C extensions should call abstract functions like ``PyObject_GetItem()``.
 
+See :ref:`Bad C API <bad-c-api>`.
+
 Good: abstract functions
 ========================
 

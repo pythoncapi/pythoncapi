@@ -5,7 +5,7 @@ Roadmap for a new Python C API
 Roadmap
 =======
 
-* Step 1: Identify :ref:`Bad C API <bad-api>` and list functions that should
+* Step 1: Identify :ref:`Bad C API <bad-c-api>` and list functions that should
   be modified or even removed
 * Step 2: Add an **opt-in** :ref:`new C API <new-c-api>` with these cleanups. Test :ref:`popular
   C extensions <consumers>` to measure how much code is broken. Start to fix

@@ -1,15 +1,14 @@
-.. _bad-api:
+.. _bad-c-api:
 
 +++++++++
 Bad C API
 +++++++++
 
 The first step to change the Python C API is to define what is a good and a bad
-C API. This page describes bad API.
+C API. The goal is to hide :ref:`implementation details <impl-details>`.  The
+:ref:`new C API <new-c-api>` must not leak implementation details anymore.
 
-**Goal:** Hide implementation details.
-
-The C API must not leak implementation details anymore.
+See also :ref:`Remove functions <remove-funcs>`.
 
 .. _borrowed-ref:
 
