@@ -1,8 +1,13 @@
-.. _c-api:
+.. _old-c-api:
 
-++++++++++++++++
-Python 3.7 C API
-++++++++++++++++
++++++++++
+Old C API
++++++++++
+
+The "Old C API" is the Python 3.7 API which "leaks" implementation details like
+``PyObject.ob_refcnt`` through :ref:`Py_INCREF() <incref>`. This API will
+remain available for CPython internals but also for specific use cases like
+Cython (for best performances) and debugging tools.
 
 See also :ref:`Calling conventensions <calling-conventions>`.
 

@@ -33,7 +33,7 @@ Pages
 
    roadmap
    runtimes
-   c_api
+   old_c_api
    bad_api
    new_api
    private_c_api

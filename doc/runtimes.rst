@@ -20,7 +20,7 @@ Regular Python: /usr/bin/python3
 * Python compiled in release mode
 * This runtime still provides ``Py_INCREF()`` macro:
   modify ``PyObject.ob_refcnt`` at the ABI level.
-* Should be fully compatible with :ref:`Python 3.7 C API <c-api>`
+* Should be fully compatible with :ref:`Python 3.7 C API <old-c-api>`
 * Should be fully compatible with Python 3.7 stable **ABI** (it may become
   incompatible with the Python 3.7 full ABI).
 

@@ -17,7 +17,7 @@ Roadmap
   Decide what to do.
 * Step 4: if step 3 gone fine and most people are still ok to continue, make
   the :ref:`new C API <new-c-api>` as the default in CPython and add an option
-  for **opt-out** to stick with the :ref:`old C API <c-api>`.
+  for **opt-out** to stick with the :ref:`old C API <old-c-api>`.
 
 Status
 ======

@@ -20,7 +20,7 @@ Design goals
 * Reduce the size of the ABI, especially export less symbols.
 
 The :ref:`backward compatibility <back-compat>` issue is partially solved by
-keeping the existing :ref:`old C API <c-api>` available as an opt-in option:
+keeping the existing :ref:`old C API <old-c-api>` available as an opt-in option:
 see the :ref:`Regular runtime <regular-runtime>`.
 
 Non-goal
@@ -86,5 +86,5 @@ C extensions must be modified to use functions to access fields.
 
 In the worst case, there will be no way to access to hidden field from the
 public C API. For these users, the only option will be to stick at the
-:ref:`old C API <c-api>` which remains backward compatible and still expose
+:ref:`old C API <old-c-api>` which remains backward compatible and still expose
 implementation details like C structure fields.
