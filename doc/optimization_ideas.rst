@@ -16,6 +16,8 @@ Remove debug checks
 See :ref:`Regular runtime <regular-runtime>`: since a debug runtime will be
 provided by default, many sanity checks can be removed from the release build.
 
+.. _change-gc:
+
 Change the garbage collector: unlikely
 ======================================
 
@@ -29,6 +31,8 @@ idea remains highly hypothetical since it very likely require deep changes in
 the C API, which is out of the scope of the :ref:`new C API project
 <new-c-api>`. The main risk is to break too many C extensions which would make
 this idea unsuable in practice.
+
+See also :ref:`Reference counting <refcount>`.
 
 Remove the GIL: unlikely
 ========================

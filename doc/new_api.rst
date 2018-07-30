@@ -79,6 +79,9 @@ Py_INCREF()
 The open question remains if it will be possible to replace ``Py_INCREF()`` and
 ``Py_DECREF()`` with function calls without killing performances.
 
+See :ref:`Reference counting <refcount>` and :ref:`Change the garbage collector
+<change-gc>`.
+
 Hide C structures
 -----------------
 

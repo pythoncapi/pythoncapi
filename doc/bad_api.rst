@@ -15,9 +15,14 @@ See also :ref:`Remove functions <remove-funcs>`.
 Borrowed references
 ===================
 
-CPython 3.7 has 36 functions and macros which return borrowed references:
+CPython 3.7 has 36 functions and macros which return borrowed references.
 
-* ``PyCell_GET()``
+CPython contains ``Doc/data/refcounts.dat`` (file is edited manually) which
+documents how functions handle reference count.
+
+Functions
+---------
+
 * ``PyDict_GetItem()``
 * ``PyDict_GetItemWithError()``
 * ``PyDict_GetItemString()``
@@ -34,38 +39,41 @@ CPython 3.7 has 36 functions and macros which return borrowed references:
 * ``Py_InitModule3()``
 * ``Py_InitModule4()``
 * ``PyImport_GetModuleDict()``
-* ``PyList_GET_ITEM()``
 * ``PyList_GetItem()``
 * ``PyMethod_Class()``
 * ``PyMethod_Function()``
-* ``PyMethod_GET_CLASS()``
-* ``PyMethod_GET_FUNCTION()``
-* ``PyMethod_GET_SELF()``
 * ``PyMethod_Self()``
 * ``PyModule_GetDict()``
 * ``PyNumber_Check()``
 * ``PyObject_Init()``
-* ``PySequence_Fast_GET_ITEM()``
 * ``PySys_GetObject()``
 * ``PySys_GetXOptions()``
 * ``PyThreadState_GetDict()``
-* ``PyTuple_GET_ITEM()``
 * ``PyTuple_GetItem()``
-* ``PyWeakref_GET_OBJECT()``
 * ``PyWeakref_GetObject()``
 
-CPython contains ``Doc/data/refcounts.dat`` (file is edited manually) which
-documents how functions handle reference count.
+Macros
+------
+
+* ``PyCell_GET()``: access directly ``PyCellObject.ob_ref``
+* ``PyList_GET_ITEM()``: access directly ``PyListObject.ob_item``
+* ``PyMethod_GET_CLASS()``
+* ``PyMethod_GET_FUNCTION()``: access directly ``PyMethodObject.im_func``
+* ``PyMethod_GET_SELF()``: access directly ``PyMethodObject.im_self``
+* ``PySequence_Fast_GET_ITEM()``: use ``PyList_GET_ITEM()``
+  or ``PyTuple_GET_ITEM()``
+* ``PyTuple_GET_ITEM()``: access directly ``PyTupleObject.ob_item``
+* ``PyWeakref_GET_OBJECT()``: access directly ``PyWeakReference.wr_object``
 
 
-``PyObject**``
-==============
+Array of pointers to Python objects (``PyObject**``)
+====================================================
 
 ``PyObject**`` must not be exposed: ``PyObject** PySequence_Fast_ITEMS(ob)``
 has to go.
 
-Evil PyDict_GetItem()
-=====================
+PyDict_GetItem()
+================
 
 The ``PyDict_GetItem()`` API is one of the most commonly called function but
 it has multiple flaws:
@@ -73,8 +81,8 @@ it has multiple flaws:
 * it returns a :ref:`borrowed reference <borrowed-ref>`
 * it ignores any kind of error: it calls ``PyErr_Clear()``
 
-The lookup is surrounded by ``PyErr_Fetch()`` and ``PyErr_Restore()`` to ignore
-any exception.
+The dictionary lookup is surrounded by ``PyErr_Fetch()`` and
+``PyErr_Restore()`` to ignore any exception.
 
 If hash(key) raises an exception, it clears the exception and just returns
 ``NULL``.
@@ -120,11 +128,16 @@ See also ``PyLong_AsLongAndOverflow()``.
 Open questions
 ==============
 
+.. _refcount:
+
 Reference counting
 ------------------
 
 Should we do something for reference counting, Py_INCREF and Py_DECREF?
 Replace them with function calls at least?
+
+See :ref:`Change the garbage collector <change-gc>` and :ref:`Py_INCREF
+<incref>`.
 
 ``PyObject_CallFunction("O")``
 ------------------------------
