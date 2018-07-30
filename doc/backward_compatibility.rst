@@ -1,3 +1,5 @@
+.. _back-compat:
+
 ++++++++++++++++++++++
 Backward compatibility
 ++++++++++++++++++++++

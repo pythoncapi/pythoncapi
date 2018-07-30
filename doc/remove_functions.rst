@@ -1,3 +1,5 @@
+.. _remove-funcs:
+
 ++++++++++++++++++++++++++++++++++++++
 Remove functions from the Python C API
 ++++++++++++++++++++++++++++++++++++++

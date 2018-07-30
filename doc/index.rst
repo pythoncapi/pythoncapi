@@ -4,6 +4,14 @@ Design a new better C API for Python
 
 Subtitle: "Make the stable API usable".
 
+To be able to introduce backward incompatible changes to the C API without
+breaking too many C extensions, this project proposes two things: design a
+:ref:`helper layer <back-compat>` providing :ref:`removed functions
+<remove-funcs>`, and a new :ref:`Python runtime <runtimes>` which is only
+usable with C extensions compiled with the new stricter and smaller C API (and
+the new :ref:`stable ABI
+<stable-abi>`).
+
 Pages
 =====
 
@@ -11,9 +19,11 @@ Pages
    :maxdepth: 2
 
    roadmap
+   runtimes
    bad_api
    c_api
    private_c_api
+   remove_functions
    backward_compatibility
    calling_conventions
    stable_abi
