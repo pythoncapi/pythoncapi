@@ -1,3 +1,5 @@
+.. _runtimes:
+
 +++++++++++++++
 Python runtimes
 +++++++++++++++
@@ -36,6 +38,8 @@ Example of Python 3.7 code::
 
 The ``if (PyList_Check(op) && (newitem != NULL))`` belongs to the debug runtime
 and should be removed from the regular Python.
+
+.. _debug-build:
 
 Debug runtime: /usr/bin/python3-dbg
 -----------------------------------
