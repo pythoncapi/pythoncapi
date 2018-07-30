@@ -19,10 +19,11 @@ The current C API has multiple issues:
 
 * Optimization attempts like Unladen Swallow and Pyston failed because of the C
   API and the lack of an usable :ref:`stable ABI <stable-abi>`.
-* "Short" Python lifecycle doesn't fit well with the "long" :ref:`lifecycle of
-  operating systems <os-vendors>`: how to get the latest Python on an "old" but
-  stable operating system?
-* :ref:`Python debug build <debug-build>` is currently basically unusable.
+* The Python lifecycle is shorter than the :ref:`lifecycle of some operating
+  systems <os-vendors>`: how to get the latest Python on an "old" but stable
+  operating system?
+* :ref:`Python debug build <debug-build>` is currently mostly unusable in
+  practice, making development of C extension harder, especially debugging.
 
 Pages
 =====
@@ -32,10 +33,12 @@ Pages
 
    roadmap
    runtimes
-   bad_api
    c_api
+   bad_api
+   new_api
    private_c_api
    remove_functions
+   optimization_ideas
    backward_compatibility
    os_vendors
    calling_conventions

@@ -53,25 +53,8 @@ Issues with an unstable ABI
 Advantages of a stable ABI
 ==========================
 
-It becomes possible to design new flavors of CPython with radical changes:
+See :ref:`Optimization ideas <optim-ideas>`.
 
-* **Change the garbage collector.** CPython not using reference counting
-  internally, but likely still use reference counting in the C API. Maybe use a
-  tracing garbage collector.  It's hard to estimate how many lines of code
-  would have to be modified to use a different garbage collector. The external
-  C API compatibility must not be broken.
-* **Remove the GIL.** CPython without a global interpreter lock, but smaller
-  locks on objects, as Jython does. -- Gilectomy is an example of such CPython
-  fork
-* **Tagged pointer.** Common optimization technic to reduce the boxing/unboxing
-  cost and reduce the memory consumption. Currently, it's not possible to
-  implement such optimization.
-* **Copy-on-Write (CoW).** Instagram is using prefork with Django but has
-  memory usage issues caused by reference counting. Accessing a Python object
-  modifies its reference counter and so copies the page which was created a COW
-  in the forked child process. Python 3.7 added `gc.freeze()
-  <https://docs.python.org/dev/library/gc.html#gc.freeze>`_ workaround.
-* Insert your new cool idea here!
 
 
 The C API is too big

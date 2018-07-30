@@ -1,6 +1,8 @@
-++++++++++++
-Python C API
-++++++++++++
+.. _c-api:
+
+++++++++++++++++
+Python 3.7 C API
+++++++++++++++++
 
 See also :ref:`Calling conventensions <calling-conventions>`.
 
