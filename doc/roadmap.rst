@@ -7,14 +7,17 @@ Roadmap
 
 * Step 1: Identify :ref:`Bad C API <bad-api>` and list functions that should
   be modified or even removed
-* Step 2: Add an **opt-in** new C API with these cleanups. Test :ref:`popular
+* Step 2: Add an **opt-in** :ref:`new C API <new-c-api>` with these cleanups. Test :ref:`popular
   C extensions <consumers>` to measure how much code is broken. Start to fix
-  these C extensions. Slowly involve more and more players into the game.
-* Step 3: Remove more functions. Maybe replace Py_INCREF() macro with a
-  function call. Finish to all PyObject structure. Measure the performance.
+  these C extensions by making them **forward** compatible. Slowly involve more
+  and more players into the game.
+* Step 3: :ref:`Remove more functions <remove-funcs>`. Maybe replace
+  :ref:`Py_INCREF() macro <incref>` with a function call. Finish to hide all C
+  structures especially ``PyObject.ob_refcnt``. Measure the performance.
   Decide what to do.
 * Step 4: if step 3 gone fine and most people are still ok to continue, make
-  the new C API as the default in CPython and add an option for **opt-out**.
+  the :ref:`new C API <new-c-api>` as the default in CPython and add an option
+  for **opt-out** to stick with the :ref:`old C API <c-api>`.
 
 Status
 ======

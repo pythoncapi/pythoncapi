@@ -12,18 +12,21 @@ experimental new changes but requires using the newer C API.
 **Welcome into the bright world of multiple new cool and compatible Python
 runtimes!**
 
+.. _regular-runtime:
+
 Regular Python: /usr/bin/python3
 ================================
 
 * Python compiled in release mode
 * This runtime still provides ``Py_INCREF()`` macro:
   modify ``PyObject.ob_refcnt`` at the ABI level.
-* Compatible with Python 3.7 C **API**.
-* Should be compatible with Python 3.7 **ABI**.
+* Should be fully compatible with :ref:`Python 3.7 C API <c-api>`
+* Should be fully compatible with Python 3.7 stable **ABI** (it may become
+  incompatible with the Python 3.7 full ABI).
 
 Compared to Python 3.7 regular runtime, this runtime no longer check its
-arguments. The debug runtime should now be preferred to develop C extensions
-and to run tests.
+arguments for performance reasons. The debug runtime should now be preferred to
+develop C extensions and to run tests.
 
 Example of Python 3.7 code::
 
@@ -61,6 +64,8 @@ Debug runtime: /usr/bin/python3-dbg
   function arguments are stored in registers, and so gdb fails with the
   "<optimized out>" message.
 
+For example, the debug runtime can check that the GIL is held by the caller.
+
 .. _exp-runtime:
 
 New experimental runtime: python3-exp
@@ -79,7 +84,7 @@ New experimental runtime: python3-exp
 * ``Py_GC`` header and ``PyObject`` structure can be very different from the
   one used by the regular and debug runtimes.
 
-Technically, this experimental runtime is likely to be a opt-in compilation
+Technically, this experimental runtime can be a opt-in compilation
 mode of the upstream CPython code base.
 
 See :ref:`Optimization ideas <optim-ideas>`.
@@ -90,19 +95,19 @@ See :ref:`Optimization ideas <optim-ideas>`.
 PyPy, RustPython and others
 ===========================
 
-Since the `C API will be smaller <new-c-api>` and the `stable ABI will become
-more usable <stable-abi>`, you can imagine that Python implementations other
-than CPython will be able to more easily have a **full and up-to-date support**
-of the latest full C API.
+Since the :ref:`C API will be smaller <new-c-api>` and the :ref:`stable ABI
+will become more usable <stable-abi>`, you can imagine that Python
+implementations other than CPython will be able to more easily have a **full
+and up-to-date support** of the latest full C API.
 
 
 Put your CPython fork here!
 ===========================
 
 Since a :ref:`stable ABI <stable-abi>` have been designed, if all your C
-extensions have opt-in for the new C API: you are now allowed to fork CPython
-and experiment your own flavor CPython. Do whatever you want: C extensions only
-access your runtime through runtime.
+extensions have opt-in for the :ref:`new C API <new-c-api>`: you are now
+allowed to fork CPython and experiment your own flavor CPython. Do whatever you
+want: C extensions only calls your runtime through function calls.
 
 See :ref:`Optimization ideas <optim-ideas>`.
 
