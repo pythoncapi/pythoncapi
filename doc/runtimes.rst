@@ -93,8 +93,29 @@ See :ref:`Optimization ideas <optim-ideas>`.
 
 .. _other-python-impl:
 
-PyPy, RustPython and others
-===========================
+Other Python implementations
+============================
+
+Last 10 years, CPython has been forked multiple times to attempt different
+CPython enhancements:
+
+* Unladen Swallow: add a JIT compiler based on LLVM
+* Pyston: add a JIT compiler based on LLVM (CPython 2.7 fork)
+* Pyjion: add a JIT compiler based on Microsoft CLR
+* Gilectomy: remove the Global Interpreter Lock nicknamed "GIL"
+
+Sadly, none is this project has been merged back into CPython. Unladen
+Swallow lost its funding from Google, Pyston lost its funding from
+Dropbox, Pyjion is developed in the limited spare time of two Microsoft
+employees.
+
+Other Python implementations written from scratch:
+
+* PyPy
+* RustPython
+* MicroPython
+* Jython
+* IronPython
 
 Since the :ref:`C API will be smaller <new-c-api>` and the :ref:`stable ABI
 will become more usable <stable-abi>`, you can imagine that Python
@@ -111,4 +132,3 @@ allowed to fork CPython and experiment your own flavor CPython. Do whatever you
 want: C extensions only calls your runtime through function calls.
 
 See :ref:`Optimization ideas <optim-ideas>`.
-

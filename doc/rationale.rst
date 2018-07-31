@@ -26,8 +26,7 @@ Performance problem: How can we make Python 2x faster?
 ======================================================
 
 "Leaking" implementation details into the ABI prevents many optimizations
-opportunities. IHMO it was the **root cause** of failures of previous large
-optimization projects like *Unladen Swallow* and *Pyston*.
+opportunities.
 
 
 Issues with an unstable ABI

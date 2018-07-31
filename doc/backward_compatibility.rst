@@ -39,3 +39,16 @@ Forward compatibility with Python 3.8 and newer
 
 C extensions have to be modified to become compatible with the :ref:`new C API
 <new-c-api>`, because of :ref:`removed functions <remove-funcs>` for example.
+
+
+Open question: support Python 2?
+================================
+
+Would it be possible to provide a basic support of Python 2 in the :ref:`new C
+API <new-c-api>`?
+
+Open question: how to install the compatibility layers
+======================================================
+
+pip install something?
+

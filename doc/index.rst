@@ -17,8 +17,6 @@ breaking too many C extensions, this project proposes two things:
 
 The current C API has multiple issues:
 
-* Optimization attempts like Unladen Swallow and Pyston failed because of the C
-  API and the lack of an usable :ref:`stable ABI <stable-abi>`.
 * The Python lifecycle is shorter than the :ref:`lifecycle of some operating
   systems <os-vendors>`: how to get the latest Python on an "old" but stable
   operating system?
@@ -49,7 +47,7 @@ Pages
    stable_abi
    consumers
    rationale
-   pep
+   split_include
 
 Links
 =====

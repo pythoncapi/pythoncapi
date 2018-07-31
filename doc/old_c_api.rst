@@ -7,7 +7,7 @@ Old C API
 The "Old C API" is the Python 3.7 API which "leaks" implementation details like
 ``PyObject.ob_refcnt`` through :ref:`Py_INCREF() <incref>`. This API will
 remain available for CPython internals but also for specific use cases like
-Cython (for best performances) and debugging tools.
+Cython (for best performances) and :ref:`debugging tools <debug-tools>`.
 
 See also :ref:`Calling conventensions <calling-conventions>`.
 

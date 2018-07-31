@@ -18,8 +18,8 @@ provided by default, many sanity checks can be removed from the release build.
 
 .. _change-gc:
 
-Change the garbage collector: unlikely
-======================================
+Change the garbage collector and remove reference counting: unlikely
+====================================================================
 
 CPython 3.7 garbage collector (GC) uses "stop-the-world" which is a big issue
 for realtime applications like games and can be major issue more generally
@@ -31,6 +31,10 @@ idea remains highly hypothetical since it very likely require deep changes in
 the C API, which is out of the scope of the :ref:`new C API project
 <new-c-api>`. The main risk is to break too many C extensions which would make
 this idea unsuable in practice.
+
+It may be possible to emulate reference counting for the C API. Py_INCREF() and
+Py_DECREF() would be reimplemented using an hash table: object => reference
+counter.
 
 See also :ref:`Reference counting <refcount>`.
 
@@ -59,14 +63,24 @@ By the way, using atomic operations to access (increase in ``Py_INCREF()``,
 decrease and test in ``Py_DECREF()``) the reference count has been proposed,
 but experiment showed a slowdown of 20% on single threaded microbenchmarks.
 
+
 Tagged pointers: doable
 =======================
+
+See `Wikipedia: Tagged pointer
+<https://en.wikipedia.org/wiki/Tagged_pointer>`_.
+
+Tagged pointers are used by MicroPython to reduce the memory footprint.
 
 Using tagged pointers is a common optimization technic to reduce the
 boxing/unboxing cost and to reduce the memory consumption.
 
 Currently, it's not possible to implement such optimization, since most of the
 C API rely on real pointer values for direct access to Python objects.
+
+Note: ARM64 was recently extended its address space to 48 bits, causing
+issue in LuaJIT: `47 bit address space restriction on ARM64
+<https://github.com/LuaJIT/LuaJIT/issues/49>`_.
 
 Copy-on-Write (CoW): doable
 ===========================
@@ -76,6 +90,25 @@ memory usage issues caused by reference counting. Accessing a Python object
 modifies its reference counter and so copies the page which was created a COW
 in the forked child process. Python 3.7 added `gc.freeze()
 <https://docs.python.org/dev/library/gc.html#gc.freeze>`_ workaround.
+
+* Replace ``Py_ssize_t ob_refcnt;`` (integer)
+  with ``Py_ssize_t *ob_refcnt;`` (pointer to an integer).
+* Same change for the GC header?
+* Store all reference counters in a separated memory block
+  (or maybe multiple memory blocks)
+
+Expected advantage: smaller memory footprint when using fork() on UNIX
+which is implemented with Copy-On-Write on physical memory pages.
+
+See also `Dismissing Python Garbage Collection at Instagram
+<https://engineering.instagram.com/dismissing-python-garbage-collection-at-instagram-4dca40b29172>`_.
+
+Transactional Memory: highly experimental
+=========================================
+
+PyPy experimented Software Transactional Memory (STM) but the project has
+been abandoned, `PyPy STM <http://doc.pypy.org/en/latest/stm.html>`_.
+
 
 And more!
 =========
