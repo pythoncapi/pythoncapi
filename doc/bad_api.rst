@@ -164,3 +164,14 @@ PyPy requests
 * Deprecate finalizer API.
 * Deprecate Unicode API introduced by the PEP 393, compact strings, like
   PyUnicode_4BYTE_DATA(str_obj).
+
+PyArg_ParseTuple
+----------------
+
+The family of ``PyArg_Parse*()`` functions like ``PyArg_ParseTuple()`` support
+a wide range of argument formats, but some of them leak implementation details:
+
+* ``O``: returns a borrowed reference
+* ``s``: returns a pointer to internal storage
+
+Is it an issue? Should we do something?
