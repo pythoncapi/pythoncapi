@@ -25,6 +25,10 @@ The current C API has multiple issues:
 * :ref:`Python debug build <debug-build>` is currently mostly unusable in
   practice, making development of C extension harder, especially debugging.
 
+Existing C extensions will still be supported and will not have to be modified.
+The :ref:`old C API <old-c-api>` is not deprecated and there is no plan
+penalize users of the old C API.
+
 Pages
 =====
 

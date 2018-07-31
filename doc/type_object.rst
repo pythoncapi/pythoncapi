@@ -120,6 +120,11 @@ Later initialized by::
     ((PyTypeObject *)v)->tp_new = NULL;
     _curses_panelstate(m)->PyCursesPanel_Type = v;
 
+Missing fields:
+
+* To provide a __dict__ in a defined C type, tp_dict_offset slot must be set,
+  but this slot is missing from the stable ABI.
+* Same issue with tp_weaklistoffset
 
 Remove cross-version binary compatibility
 =========================================
