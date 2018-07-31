@@ -119,3 +119,9 @@ Later initialized by::
         goto fail;
     ((PyTypeObject *)v)->tp_new = NULL;
     _curses_panelstate(m)->PyCursesPanel_Type = v;
+
+
+Remove cross-version binary compatibility
+=========================================
+
+See `bpo-32388 <https://bugs.python.org/issue32388>`_.
