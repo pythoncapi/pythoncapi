@@ -14,20 +14,45 @@ C extensions should call abstract functions like ``PyObject_GetItem()``.
 
 See :ref:`Bad C API <bad-c-api>`.
 
-Good: abstract functions
-========================
+Only keep abstract functions
+============================
 
-Examples:
+Good: abstract functions. Examples:
 
 * ``PyObject_GetItem()``, ``PySequence_GetItem()``
 
-Bad? implementations
-====================
-
-Examples:
+Bad? implementations for concrete types. Examples:
 
 * ``PyObject_GetItem()``, ``PySequence_GetItem()``:
 
   * ``PyList_GetItem()``
   * ``PyTuple_GetItem()``
   * ``PyDict_GetItem()``
+
+Implementations for concrete types don't *have to* be part of the C API.
+Moreover, using directly them introduce bugs when the caller pass a subtype.
+For example, PyDict_GetItem() **must not** be used on a dict subtype, since
+``__getitem__()`` be be overriden for good reasons.
+
+
+Functions to call functions
+===========================
+
+
+* ``PyEval_CallFunction()``: a comment says *"PyEval_CallFunction is exact copy
+  of PyObject_CallFunction. This function is kept for backward compatibility."*
+* ``PyEval_CallMethod()``: a comment says *"PyEval_CallMethod is exact copy of
+  PyObject_CallMethod. This function is kept for backward compatibility."*
+
+Open questions
+==============
+
+Functions to call functions
+---------------------------
+
+Should we remove the following functions to make the C API smaller?
+
+* ``PyEval_CallObjectWithKeywords()``: almost duplicate ``PyObject_Call()``,
+  except that *args* (tuple of positional arguments) can be ``NULL``
+* ``PyObject_CallObject()``: almost duplicate ``PyObject_Call()``,
+  except that *args* (tuple of positional arguments) can be ``NULL``

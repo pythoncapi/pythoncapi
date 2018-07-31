@@ -65,6 +65,11 @@ Macros
 * ``PyTuple_GET_ITEM()``: access directly ``PyTupleObject.ob_item``
 * ``PyWeakref_GET_OBJECT()``: access directly ``PyWeakReference.wr_object``
 
+Borrowed references: PyEval_GetFuncName()
+=========================================
+
+* ``PyEval_GetFuncName()`` returns the internal ``const char*`` inside a
+   borrowed reference to a function ``__name__``.
 
 Array of pointers to Python objects (``PyObject**``)
 ====================================================
