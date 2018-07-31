@@ -121,6 +121,14 @@ Don't leak the structures like ``PyObject`` or ``PyTupleObject`` to not
 access directly fields, to not use fixed offset at the ABI level. Replace
 macros with functions calls. PyPy already does this in its C API (``cpyext``).
 
+PyType_Ready() and setting directly PyTypeObject fields
+=======================================================
+
+* ``PyTypeObject`` structure should become opaquet
+* ``PyType_Ready()`` should be removed
+
+See :ref:`Implement a PyTypeObject in C <impl-pytype>` for the rationale.
+
 Integer overflow
 ================
 

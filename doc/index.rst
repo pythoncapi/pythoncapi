@@ -36,6 +36,7 @@ Pages
    new_api
    runtimes
    old_c_api
+   type_object
    remove_functions
    optimization_ideas
    backward_compatibility
