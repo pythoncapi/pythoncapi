@@ -6,7 +6,7 @@ Subtitle: "Make the stable API usable".
 
 * `Project website <https://pythoncapi.readthedocs.io/>`_
 * `Project source (pythoncapi GitHub project)
-  <https://github.com/vstinner/pythoncapi/>`_
+  <https://github.com/pythoncapi/pythoncapi/>`_
 * `capi-sig mailing list
   <https://mail.python.org/mm3/mailman3/lists/capi-sig.python.org/>`_
 

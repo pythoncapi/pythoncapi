@@ -53,7 +53,7 @@ Links
 =====
 
 * `Python C API <https://pythoncapi.readthedocs.io/>`_ (this documentation)
-* `pythoncapi GitHub project <https://github.com/vstinner/pythoncapi/>`_
+* `pythoncapi GitHub project <https://github.com/pythoncapi/pythoncapi/>`_
   (this documentation can be found in the ``doc/`` subdirectory).
 * `capi-sig mailing list
   <https://mail.python.org/mm3/mailman3/lists/capi-sig.python.org/>`_
