@@ -130,3 +130,15 @@ Remove cross-version binary compatibility
 =========================================
 
 See `bpo-32388 <https://bugs.python.org/issue32388>`_.
+
+PyStructSequence_InitType()
+===========================
+
+There are two public APIs for structure sequences that are wrappers around
+``PyType_Ready()`` for initializing a ``PyTypeObject`` in-place:
+
+* ``PyStructSequence_InitType()``
+* ``PyStructSequence_InitType2()``
+
+A third-party developer should prefer ``PyStructSequence_NewType()`` to create
+a type object from an array of ``PyStructSequence_Desc``.
