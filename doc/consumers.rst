@@ -18,6 +18,8 @@ Popular modules using Cython
 
 * uvloop
 
+.. _debug-tools:
+
 Debugging tools
 ===============
 

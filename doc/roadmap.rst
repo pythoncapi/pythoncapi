@@ -19,6 +19,14 @@ Roadmap
   the :ref:`new C API <new-c-api>` as the default in CPython and add an option
   for **opt-out** to stick with the :ref:`old C API <old-c-api>`.
 
+Open questions
+==============
+
+* Remove or deprecate APIs using borrowed references? If ``PyTuple_GetItem()``
+  must be replaced with ``PyTuple_GetItemRef()``, how do we provide
+  ``PyTuple_GetItemRef()`` for Python 3.7 and older? See :ref:`Backward
+  compatibility <back-compat>`.
+
 Status
 ======
 

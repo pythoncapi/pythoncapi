@@ -15,7 +15,10 @@ See also :ref:`Remove functions <remove-funcs>`.
 Borrowed references
 ===================
 
-CPython 3.7 has 36 functions and macros which return borrowed references.
+CPython 3.7 has many functions and macros which return or use borrowed
+references.  For example, ``PyTuple_GetItem()`` returns a borrowed reference,
+whereas ``PyTuple_SetItem()`` stores a borrowed reference (store an item into a
+tuple without increasing the reference counter).
 
 CPython contains ``Doc/data/refcounts.dat`` (file is edited manually) which
 documents how functions handle reference count.
@@ -40,6 +43,7 @@ Functions
 * ``Py_InitModule4()``
 * ``PyImport_GetModuleDict()``
 * ``PyList_GetItem()``
+* ``PyList_SetItem()``
 * ``PyMethod_Class()``
 * ``PyMethod_Function()``
 * ``PyMethod_Self()``
@@ -50,20 +54,28 @@ Functions
 * ``PySys_GetXOptions()``
 * ``PyThreadState_GetDict()``
 * ``PyTuple_GetItem()``
+* ``PyTuple_SetItem()``
 * ``PyWeakref_GetObject()``
 
 Macros
 ------
 
-* ``PyCell_GET()``: access directly ``PyCellObject.ob_ref``
-* ``PyList_GET_ITEM()``: access directly ``PyListObject.ob_item``
+* ``PyCell_GET()``
+* ``PyList_GET_ITEM()``
+* ``PyList_SET_ITEM()``
 * ``PyMethod_GET_CLASS()``
-* ``PyMethod_GET_FUNCTION()``: access directly ``PyMethodObject.im_func``
-* ``PyMethod_GET_SELF()``: access directly ``PyMethodObject.im_self``
-* ``PySequence_Fast_GET_ITEM()``: use ``PyList_GET_ITEM()``
-  or ``PyTuple_GET_ITEM()``
-* ``PyTuple_GET_ITEM()``: access directly ``PyTupleObject.ob_item``
-* ``PyWeakref_GET_OBJECT()``: access directly ``PyWeakReference.wr_object``
+* ``PyMethod_GET_FUNCTION()``
+* ``PyMethod_GET_SELF()``
+* ``PySequence_Fast_GET_ITEM()``
+* ``PyTuple_GET_ITEM()``
+* ``PyTuple_SET_ITEM()``
+* ``PyWeakref_GET_OBJECT()``
+* ``Py_TYPE()``
+
+Border line:
+
+* ``Py_SETREF()``, ``Py_XSETREF()``: the caller has to manually increment the
+  reference counter of the new value
 
 Borrowed references: PyEval_GetFuncName()
 =========================================
@@ -120,6 +132,17 @@ C structures
 Don't leak the structures like ``PyObject`` or ``PyTupleObject`` to not
 access directly fields, to not use fixed offset at the ABI level. Replace
 macros with functions calls. PyPy already does this in its C API (``cpyext``).
+
+Example of macros:
+
+* ``PyCell_GET()``: access directly ``PyCellObject.ob_ref``
+* ``PyList_GET_ITEM()``: access directly ``PyListObject.ob_item``
+* ``PyMethod_GET_FUNCTION()``: access directly ``PyMethodObject.im_func``
+* ``PyMethod_GET_SELF()``: access directly ``PyMethodObject.im_self``
+* ``PySequence_Fast_GET_ITEM()``: use ``PyList_GET_ITEM()``
+  or ``PyTuple_GET_ITEM()``
+* ``PyTuple_GET_ITEM()``: access directly ``PyTupleObject.ob_item``
+* ``PyWeakref_GET_OBJECT()``: access directly ``PyWeakReference.wr_object``
 
 PyType_Ready() and setting directly PyTypeObject fields
 =======================================================

@@ -14,6 +14,17 @@ C extensions should call abstract functions like ``PyObject_GetItem()``.
 
 See :ref:`Bad C API <bad-c-api>`.
 
+Functions and macros removed from the new CAPI
+==============================================
+
+Removed functions and macros which use :ref:`borrowed references
+<borrowed-ref>`:
+
+* ``PyTuple_GET_ITEM()``
+* ``PyTuple_GetItem()``
+* ``PyTuple_SetItem()``
+* ``PyTuple_SET_ITEM()``
+
 Only keep abstract functions
 ============================
 
