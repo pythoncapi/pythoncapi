@@ -70,10 +70,10 @@ Macros
 * ``PyTuple_GET_ITEM()``
 * ``PyTuple_SET_ITEM()``
 * ``PyWeakref_GET_OBJECT()``
-* ``Py_TYPE()``
 
 Border line:
 
+* ``Py_TYPE()``
 * ``Py_SETREF()``, ``Py_XSETREF()``: the caller has to manually increment the
   reference counter of the new value
 
