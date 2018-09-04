@@ -28,12 +28,16 @@ New functions
 
 * ``PyTuple_GetItemRef()``: similar to ``PyTuple_GetItem()`` but returns a
   strong reference, rather than a borrowed reference
+* ``PyList_GetItemRef()``: similar to ``PyList_GetItem()`` but returns a
+  strong reference, rather than a borrowed reference
 * ``PyTuple_SetItemRef()``: similar to ``PyTuple_SetItem()`` but uses a strong
   reference on the item
+* ``PySequence_Fast_GetItemRef()``
+* ``PyStructSequence_SetItemRef()``
 
 XXX private functions:
 
-* ``_Py_SET_TYPE()``: see :ref:`Implement a PyTypeObject in C <impl-pytype>`_
+* ``_Py_SET_TYPE()``: see :ref:`Implement a PyTypeObject in C <impl-pytype>`
 * ``_Py_SET_SIZE()``
 
 Non-goal
@@ -92,7 +96,7 @@ as l-value::
 
 XXX in the current implementation, ``_Py_SET_SIZE()`` and ``_Py_SET_TYPE()``
 macros have been added for such use case. For the type, see also
-:ref:`Implement a PyTypeObject in C <impl-pytype>`_.
+:ref:`Implement a PyTypeObject in C <impl-pytype>`.
 
 
 .. _incref:
