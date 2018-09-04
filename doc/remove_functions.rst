@@ -20,13 +20,14 @@ Functions and macros removed from the new CAPI
 Removed functions and macros which use :ref:`borrowed references
 <borrowed-ref>`:
 
+* ``Py_TYPE()``
 * ``PyTuple_GET_ITEM()``
 * ``PyTuple_GetItem()``
 * ``PyTuple_SetItem()``
 * ``PyTuple_SET_ITEM()``
 
-Only keep abstract functions
-============================
+Only keep abstract functions?
+=============================
 
 Good: abstract functions. Examples:
 

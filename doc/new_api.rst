@@ -23,6 +23,19 @@ The :ref:`backward compatibility <back-compat>` issue is partially solved by
 keeping the existing :ref:`old C API <old-c-api>` available as an opt-in option:
 see the :ref:`Regular runtime <regular-runtime>`.
 
+New functions
+=============
+
+* ``PyTuple_GetItemRef()``: similar to ``PyTuple_GetItem()`` but returns a
+  strong reference, rather than a borrowed reference
+* ``PyTuple_SetItemRef()``: similar to ``PyTuple_SetItem()`` but uses a strong
+  reference on the item
+
+XXX private functions:
+
+* ``_Py_SET_TYPE()``: see :ref:`Implement a PyTypeObject in C <impl-pytype>`_
+* ``_Py_SET_SIZE()``
+
 Non-goal
 ========
 
@@ -70,6 +83,17 @@ whereas the ABI should become smaller.
 This change remains backward compatible in term of **C API**. Moreover, using
 function calls helps to make C extension backward compatible at the **ABI
 level** as well.
+
+Problem: it's no longer possible to use ``Py_TYPE()`` and ``Py_SIZE()``
+as l-value::
+
+        Py_SIZE(obj) = size;
+        Py_TYPE(obj) = type;
+
+XXX in the current implementation, ``_Py_SET_SIZE()`` and ``_Py_SET_TYPE()``
+macros have been added for such use case. For the type, see also
+:ref:`Implement a PyTypeObject in C <impl-pytype>`_.
+
 
 .. _incref:
 
