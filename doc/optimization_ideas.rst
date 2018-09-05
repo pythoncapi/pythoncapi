@@ -110,6 +110,8 @@ PyPy experimented Software Transactional Memory (STM) but the project has
 been abandoned, `PyPy STM <http://doc.pypy.org/en/latest/stm.html>`_.
 
 
+.. _specialized-list:
+
 Specialized list for small integers
 ===================================
 

@@ -15,6 +15,15 @@ See also :ref:`Remove functions <remove-funcs>`.
 Borrowed references
 ===================
 
+A borrowed reference is a pointer which doesn't "hold" a reference. If the
+object is destroyed, the borrowed reference becomes a dangling pointer: pointer
+pointing to freed memory which might be reused by a new object.
+
+Borrowed references can lead to bugs and crashes when misused. The
+:ref:`Specialized list for small integers <specialized-list>` optimization is
+incompatible with borrowed references, since the runtime cannot guess when the
+temporary object should be destroyed.
+
 CPython 3.7 has many functions and macros which return or use borrowed
 references.  For example, ``PyTuple_GetItem()`` returns a borrowed reference,
 whereas ``PyTuple_SetItem()`` stores a borrowed reference (store an item into a
