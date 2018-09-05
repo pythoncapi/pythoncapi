@@ -26,6 +26,11 @@ see the :ref:`Regular runtime <regular-runtime>`.
 New functions
 =============
 
+XXX the following functions have been added to the current WORK-IN-PROGRESS
+implementation of the new C API. Maybe they will go away later. It's just a
+small step to move away from borrowed references. Maybe existing
+``PyObject_GetItem()`` and ``PyObject_SetItem()`` are already good enough.
+
 * ``PyTuple_GetItemRef()``: similar to ``PyTuple_GetItem()`` but returns a
   strong reference, rather than a borrowed reference
 * ``PyList_GetItemRef()``: similar to ``PyList_GetItem()`` but returns a
