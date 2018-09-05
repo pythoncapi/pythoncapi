@@ -76,6 +76,7 @@ Border line:
 * ``Py_TYPE()``
 * ``Py_SETREF()``, ``Py_XSETREF()``: the caller has to manually increment the
   reference counter of the new value
+* ``N`` format of ``Py_BuildValue()``?
 
 Borrowed references: PyEval_GetFuncName()
 =========================================

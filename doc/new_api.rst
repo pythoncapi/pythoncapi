@@ -34,6 +34,9 @@ New functions
   reference on the item
 * ``PySequence_Fast_GetItemRef()``
 * ``PyStructSequence_SetItemRef()``
+* ``Py_GetType()``: similar to ``Py_TYPE()`` but returns a strong reference
+* ``Py_TYPE_IS(ob, type)``: equivalent to ``Py_TYPE(ob) == type``
+* ``%T`` format for ``PyUnicode_FromFormat()``
 
 XXX private functions:
 
