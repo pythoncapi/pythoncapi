@@ -15,14 +15,49 @@ See also :ref:`Remove functions <remove-funcs>`.
 Borrowed references
 ===================
 
-A borrowed reference is a pointer which doesn't "hold" a reference. If the
-object is destroyed, the borrowed reference becomes a dangling pointer: pointer
-pointing to freed memory which might be reused by a new object.
+Problem caused by borrowed references
+-------------------------------------
 
-Borrowed references can lead to bugs and crashes when misused. The
-:ref:`Specialized list for small integers <specialized-list>` optimization is
+A borrowed reference is a pointer which doesn't "hold" a reference. If the
+object is destroyed, the borrowed reference becomes a `dangling pointer
+<https://en.wikipedia.org/wiki/Dangling_pointer>`_: point to freed memory which
+might be reused by a new object. Borrowed references can lead to bugs and
+crashes when misused. Recent example of CPython bug: `bpo-25750: crash in
+type_getattro() <https://bugs.python.org/issue25750>`_.
+
+Borrowed references are a problem whenever there is no reference to borrow:
+they assume that a reified object already exists (and thus have a positive
+refcout), so that it is just borrowed.
+
+:ref:`Tagged pointers <tagged-pointer>` are an example of this: since there is
+no concrete ``PyObject*`` to represent the integer, it cannot easily be
+manipulated.
+
+PyPy has a similar problem with list strategies: if there is a list containing
+only integers, it is stored as a compact C array of longs, and the W_IntObject
+is only created when an item is accessed (most of the time the W_IntObject is
+optimized away by the JIT, but this is another story).
+
+But for cpyext, this is a problem: ``PyList_GetItem()`` returns a borrowed
+reference, but there is no any concrete ``PyObject*`` to return! The current
+``cpyext`` solution is very bad: basically, the first time ``PyList_GetItem()``
+is called, the *whole* list is converted to a list of ``PyObject*``, just to
+have something to return: see `cpyext get_list_storage()
+<https://bitbucket.org/pypy/pypy/src/b9bbd6c0933349cbdbfe2b884a68a16ad16c3a8a/pypy/module/cpyext/listobject.py#lines-28>`_.
+
+See also the :ref:`Specialized list for small integers <specialized-list>`
+optimization: same optimization applied to CPython. This optimization is
 incompatible with borrowed references, since the runtime cannot guess when the
 temporary object should be destroyed.
+
+
+If ``PyList_GetItem()`` returned a strong reference, the ``PyObject*`` could
+just be allocated on the fly and destroy it when the user decref it. Basically,
+by putting borrowed references in the API, we are fixing in advance the data
+structure to use!
+
+C API using borrowed references
+-------------------------------
 
 CPython 3.7 has many functions and macros which return or use borrowed
 references.  For example, ``PyTuple_GetItem()`` returns a borrowed reference,
@@ -33,7 +68,7 @@ CPython contains ``Doc/data/refcounts.dat`` (file is edited manually) which
 documents how functions handle reference count.
 
 Functions
----------
+^^^^^^^^^
 
 * ``PyDict_GetItem()``
 * ``PyDict_GetItemWithError()``
@@ -56,6 +91,7 @@ Functions
 * ``PyMethod_Class()``
 * ``PyMethod_Function()``
 * ``PyMethod_Self()``
+* ``PyModule_AddObject()``: steal a reference on success, but doesn't on error
 * ``PyModule_GetDict()``
 * ``PyNumber_Check()``
 * ``PyObject_Init()``
@@ -80,7 +116,8 @@ Macros
 * ``PyTuple_SET_ITEM()``
 * ``PyWeakref_GET_OBJECT()``
 
-Border line:
+Border line
+^^^^^^^^^^^
 
 * ``Py_SETREF()``, ``Py_XSETREF()``: the caller has to manually increment the
   reference counter of the new value

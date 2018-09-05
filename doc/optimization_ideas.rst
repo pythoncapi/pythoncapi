@@ -64,6 +64,8 @@ decrease and test in ``Py_DECREF()``) the reference count has been proposed,
 but experiment showed a slowdown of 20% on single threaded microbenchmarks.
 
 
+.. _tagged-pointer:
+
 Tagged pointers: doable
 =======================
 
