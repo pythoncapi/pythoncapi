@@ -73,10 +73,30 @@ Macros
 
 Border line:
 
-* ``Py_TYPE()``
 * ``Py_SETREF()``, ``Py_XSETREF()``: the caller has to manually increment the
   reference counter of the new value
 * ``N`` format of ``Py_BuildValue()``?
+
+
+.. _py-type:
+
+Py_TYPE() corner case
+=====================
+
+Technically, ``Py_TYPE()`` returns a borrowed reference to a ``PyTypeObject*``.
+In pratice, for heap types, an instance holds already a strong reference
+to the type in ``PyObject.ob_type``. For static types, instances use a borrowed
+reference, but static types are never destroyed.
+
+Hugh Fisher summarized:
+
+   It don't think it is  worth forcing every C extension module to be rewritten,
+   and incur a performance hit, to eliminate a rare bug from badly written
+   code.
+
+See the discussion on capi-sig: `Open questions about borrowed reference.
+<https://mail.python.org/mm3/archives/list/capi-sig@python.org/thread/V5EMBIIJFJGJGBQPLCFFXCHAUFNTA45H/>`_
+(Sept 2018).
 
 Borrowed references: PyEval_GetFuncName()
 =========================================

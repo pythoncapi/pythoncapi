@@ -34,14 +34,19 @@ New functions
   reference on the item
 * ``PySequence_Fast_GetItemRef()``
 * ``PyStructSequence_SetItemRef()``
-* ``Py_GetType()``: similar to ``Py_TYPE()`` but returns a strong reference
-* ``Py_TYPE_IS(ob, type)``: equivalent to ``Py_TYPE(ob) == type``
-* ``%T`` format for ``PyUnicode_FromFormat()``
 
 XXX private functions:
 
 * ``_Py_SET_TYPE()``: see :ref:`Implement a PyTypeObject in C <impl-pytype>`
 * ``_Py_SET_SIZE()``
+
+If we decide that :ref:`Py_TYPE() <py-type>` should go away, 3 more
+functions/features are needed:
+
+* ``Py_GetType()``: similar to ``Py_TYPE()`` but returns a strong reference
+* ``Py_TYPE_IS(ob, type)``: equivalent to ``Py_TYPE(ob) == type``
+* ``%T`` format for ``PyUnicode_FromFormat()``
+
 
 Non-goal
 ========
