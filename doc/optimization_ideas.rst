@@ -110,6 +110,45 @@ PyPy experimented Software Transactional Memory (STM) but the project has
 been abandoned, `PyPy STM <http://doc.pypy.org/en/latest/stm.html>`_.
 
 
+Specialized list for small integers
+===================================
+
+If C extensions don't access structure members anymore, it becomes
+possible to modify the memory layout.
+
+For example, it's possible to design a specialized implementation of
+``PyListObject`` for small integers::
+
+    typedef struct {
+        PyVarObject ob_base;
+        int use_small_int;
+        PyObject **pyobject_array;
+        int32_t *small_int_array;   // <-- new compact C array for integers
+        Py_ssize_t allocated;
+    } PyListObject;
+
+    PyObject* PyList_GET_ITEM(PyObject *op, Py_ssize_t index)
+    {
+        PyListObject *list = (PyListObject *)op;
+        if (list->use_small_int) {
+            int32_t item = list->small_int_array[index];
+            /* create a new object at each call */
+            return PyLong_FromLong(item);
+        }
+        else {
+            return list->pyobject_array[index];
+        }
+    }
+
+Each call to ``PyList_GET_ITEM()`` of this example creates a new temporary
+object which leads the memory leak (reference leak). This is one concrete
+example of issue with borrowed references.
+
+List specialized for numbers is just a example easy to understand to show that
+it becomes possible to modify PyObject structures. The main benefit of the
+memory footprint, but the overall on performances is unknown at this point.
+
+
 And more!
 =========
 
