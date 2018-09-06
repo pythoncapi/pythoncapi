@@ -4,6 +4,8 @@
 Python stable ABI?
 ++++++++++++++++++
 
+.. _from-api-to-api:
+
 Relationship between the C API and the ABI
 ==========================================
 
