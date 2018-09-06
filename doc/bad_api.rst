@@ -8,7 +8,13 @@ The first step to change the Python C API is to define what is a good and a bad
 C API. The goal is to hide :ref:`implementation details <impl-details>`.  The
 :ref:`new C API <new-c-api>` must not leak implementation details anymore.
 
-See also :ref:`Remove functions <remove-funcs>`.
+The Python C API is just too big. For performance reasons, CPython calls
+internally directly the implementation of a function instead of using the
+abstract API. For example, ``PyDict_GetItem()`` is preferred over
+``PyObject_GetItem()``. Inside, CPython, such optimization is fine. But
+exposing so many functions is an issue: CPython has to keep backward
+compatibility, PyPy has to implement all these functions, etc. Third party
+C extensions should call abstract functions like ``PyObject_GetItem()``.
 
 .. _borrowed-ref:
 
@@ -145,6 +151,45 @@ Hugh Fisher summarized:
 See the discussion on capi-sig: `Open questions about borrowed reference.
 <https://mail.python.org/mm3/archives/list/capi-sig@python.org/thread/V5EMBIIJFJGJGBQPLCFFXCHAUFNTA45H/>`_
 (Sept 2018).
+
+
+Duplicated functions
+====================
+
+* ``PyEval_CallObjectWithKeywords()``: almost duplicate ``PyObject_Call()``,
+  except that *args* (tuple of positional arguments) can be ``NULL``
+* ``PyObject_CallObject()``: almost duplicate ``PyObject_Call()``,
+  except that *args* (tuple of positional arguments) can be ``NULL``
+
+
+Only keep abstract functions?
+=============================
+
+Good: abstract functions. Examples:
+
+* ``PyObject_GetItem()``, ``PySequence_GetItem()``
+
+Bad? implementations for concrete types. Examples:
+
+* ``PyObject_GetItem()``, ``PySequence_GetItem()``:
+
+  * ``PyList_GetItem()``
+  * ``PyTuple_GetItem()``
+  * ``PyDict_GetItem()``
+
+Implementations for concrete types don't *have to* be part of the C API.
+Moreover, using directly them introduce bugs when the caller pass a subtype.
+For example, PyDict_GetItem() **must not** be used on a dict subtype, since
+``__getitem__()`` be be overriden for good reasons.
+
+
+Functions kept for backward compatibility
+=========================================
+
+* ``PyEval_CallFunction()``: a comment says *"PyEval_CallFunction is exact copy
+  of PyObject_CallFunction. This function is kept for backward compatibility."*
+* ``PyEval_CallMethod()``: a comment says *"PyEval_CallMethod is exact copy of
+  PyObject_CallMethod. This function is kept for backward compatibility."*
 
 
 No public C functions if it can't be done in Python

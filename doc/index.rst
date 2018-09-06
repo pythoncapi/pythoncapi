@@ -31,7 +31,7 @@ Pages
 =====
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    rationale
    roadmap
@@ -62,3 +62,31 @@ Links
   (this documentation can be found in the ``doc/`` subdirectory).
 * `capi-sig mailing list
   <https://mail.python.org/mm3/mailman3/lists/capi-sig.python.org/>`_
+
+Table of Contents
+=================
+
+.. toctree::
+   :maxdepth: 2
+
+   rationale
+   roadmap
+   bad_api
+   new_api
+   runtimes
+   old_c_api
+   type_object
+   remove_functions
+   optimization_ideas
+   backward_compatibility
+   os_vendors
+   calling_conventions
+   stable_abi
+   consumers
+   cpyext
+   cython
+   cffi
+   remove_c_api
+   performance
+   split_include
+

@@ -1,8 +1,8 @@
 .. _cython:
 
-++++++++++++++++++++++++++++++++++
-The Cython C-Extensions for Python
-++++++++++++++++++++++++++++++++++
+++++++
+Cython
+++++++
 
 An alternative to using the C API directly is to rewrite a C extension using
 `Cython <http://cython.org/>`__ which generates C code using the C API.

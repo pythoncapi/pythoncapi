@@ -15,13 +15,26 @@ Design goals
   question remains if it will be possible to replace ``Py_INCREF()`` and
   ``Py_DECREF()`` with function calls without killing performances.
 * Reduce the size of the C API to reduce the maintenance burden of :ref:`Python
-  implementations other than CPython <other-python-impl>`: :ref:`Remove
-  functions <remove-funcs>`.
+  implementations other than CPython <other-python-impl>`: remove functions.
 * Reduce the size of the ABI, especially export less symbols.
 
 The :ref:`backward compatibility <back-compat>` issue is partially solved by
 keeping the existing :ref:`old C API <old-c-api>` available as an opt-in option:
 see the :ref:`Regular runtime <regular-runtime>`.
+
+.. _remove-funcs:
+
+Remove functions and macros
+===========================
+
+Removed functions and macros because they use :ref:`borrowed references
+<borrowed-ref>`:
+
+* ``Py_TYPE()``
+* ``PyTuple_GET_ITEM()``
+* ``PyTuple_GetItem()``
+* ``PyTuple_SetItem()``
+* ``PyTuple_SET_ITEM()``
 
 New functions
 =============
