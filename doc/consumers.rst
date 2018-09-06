@@ -9,7 +9,7 @@ Popular C extensions using the C API
 
 * numpy
 * pandas
-* cython
+* :`ref:`Cython <cython>`
 * Pillow
 * lxml
 
@@ -17,6 +17,8 @@ Popular modules using Cython
 ============================
 
 * uvloop
+
+See :ref:`Cython <cython>`.
 
 .. _debug-tools:
 

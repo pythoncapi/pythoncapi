@@ -15,7 +15,7 @@ Design goals
   question remains if it will be possible to replace ``Py_INCREF()`` and
   ``Py_DECREF()`` with function calls without killing performances.
 * Reduce the size of the C API to reduce the maintenance burden of :ref:`Python
-  implementations other than CPython <other-python-impl>`. See :ref:`Remove
+  implementations other than CPython <other-python-impl>`: :ref:`Remove
   functions <remove-funcs>`.
 * Reduce the size of the ABI, especially export less symbols.
 
@@ -56,7 +56,7 @@ functions/features are needed:
 Non-goal
 ========
 
-* Cython and cffi must be preferred to write new C extensions: there is no
+* :ref:`Cython <cython>` and cffi must be preferred to write new C extensions: there is no
   intent to replace Cython. Moreover, there is no intent to make Cython
   development harder. Cython will still be able to access directly the full C
   API which includes implementation details and low-level "private" APIs.

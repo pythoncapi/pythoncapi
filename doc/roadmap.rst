@@ -39,8 +39,8 @@ Players
 =======
 
 * CPython: Victor Stinner
-* PyPy (cpyext): Ronan Lamy
-* Cython: Stefan Behnel
+* PyPy :ref:`cpyext <cpyext>`: Ronan Lamy
+* :ref:`Cython <cython>`: Stefan Behnel
 
 Unknown status:
 

@@ -38,7 +38,7 @@ only integers, it is stored as a compact C array of longs, and the W_IntObject
 is only created when an item is accessed (most of the time the W_IntObject is
 optimized away by the JIT, but this is another story).
 
-But for cpyext, this is a problem: ``PyList_GetItem()`` returns a borrowed
+But for :ref:`cpyext <cpyext>`, this is a problem: ``PyList_GetItem()`` returns a borrowed
 reference, but there is no any concrete ``PyObject*`` to return! The current
 ``cpyext`` solution is very bad: basically, the first time ``PyList_GetItem()``
 is called, the *whole* list is converted to a list of ``PyObject*``, just to
@@ -76,6 +76,8 @@ Functions
 * ``PyDict_SetDefault()``
 * ``PyErr_Occurred()``
 * ``PyEval_GetBuiltins()``
+* ``PyEval_GetFuncName()``: return  the internal ``const char*`` inside a
+   borrowed reference to a function ``__name__``.
 * ``PyFile_Name()``
 * ``PyFunction_GetClosure()``
 * ``PyFunction_GetCode()``
@@ -127,7 +129,7 @@ Border line
 .. _py-type:
 
 Py_TYPE() corner case
-=====================
+---------------------
 
 Technically, ``Py_TYPE()`` returns a borrowed reference to a ``PyTypeObject*``.
 In pratice, for heap types, an instance holds already a strong reference
@@ -144,11 +146,15 @@ See the discussion on capi-sig: `Open questions about borrowed reference.
 <https://mail.python.org/mm3/archives/list/capi-sig@python.org/thread/V5EMBIIJFJGJGBQPLCFFXCHAUFNTA45H/>`_
 (Sept 2018).
 
-Borrowed references: PyEval_GetFuncName()
-=========================================
 
-* ``PyEval_GetFuncName()`` returns the internal ``const char*`` inside a
-   borrowed reference to a function ``__name__``.
+No public C functions if it can't be done in Python
+===================================================
+
+There should not be C APIs that do something that you can't do in Python.
+
+Example: the C buffer protocol, the Python ``memoryview`` type only expose a
+subset of ``buffer`` features.
+
 
 Array of pointers to Python objects (``PyObject**``)
 ====================================================
@@ -265,3 +271,18 @@ a wide range of argument formats, but some of them leak implementation details:
 * ``s``: returns a pointer to internal storage
 
 Is it an issue? Should we do something?
+
+
+For internal use only
+=====================
+
+The C API documentation contains a few functions with the note "For internal
+use only". Examples:
+
+* ``_PyImport_Init()``
+* ``PyImport_Cleanup()``
+* ``_PyImport_Fini()``
+
+Why ``PyImport_Cleanup()`` is still a public method?
+
+These functions should be made really private and removed from the C API.

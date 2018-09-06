@@ -33,6 +33,7 @@ Pages
 .. toctree::
    :maxdepth: 2
 
+   rationale
    roadmap
    bad_api
    new_api
@@ -46,7 +47,11 @@ Pages
    calling_conventions
    stable_abi
    consumers
-   rationale
+   cpyext
+   cython
+   cffi
+   remove_c_api
+   performance
    split_include
 
 Links

@@ -136,5 +136,5 @@ Use case: call "C function" from a "C function".
 Two entry points? Regular ``PyObject*`` entry point, but efficient "C" entry
 point as well?
 
-PyPy wants this, Cython would benefit as well.
+PyPy wants this, :ref:`Cython <cython>` would benefit as well.
 

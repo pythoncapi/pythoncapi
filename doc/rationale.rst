@@ -18,7 +18,7 @@ The Big Carrot
 Changing the C API means that authors of C extensions have to do something. To
 justify these changes, we need a big carrot. Examples:
 
-* faster Python if you pick new API? faster PyPy cpyext?
+* faster Python if you pick new API? faster PyPy :ref:`cpyext <cpyext>`?
 * less bugs? no more surprising borrow references causing "funny" crashes
 * new features?
 
@@ -47,97 +47,3 @@ Issues with an unstable ABI
   debug builds would ease debugging since the debug builds add many debug
   checks which are too expensive (CPU/memory) to be enabled by default in a
   release build.
-
-
-Advantages of a stable ABI
-==========================
-
-See :ref:`Optimization ideas <optim-ideas>`.
-
-
-
-The C API is too big
-====================
-
-**Goal:** Smaller C API.
-
-Common complain from PyPy developers. Writing a new Python implementation with
-implements the full C API is a huge work.
-
-Slowly **remove** functions from the future stable ABI? It should be done
-gradually and update most famous Python C extensions in parrallel to not "break
-Python".
-
-Some C functions can easily be replaced by a function call, these functions are
-mostly written for **internal** usage, to make the CPython code base simpler.
-But they should not be exposed (they should be private).
-
-
-The C API must not leak implementation details anymore
-======================================================
-
-**Goal:** Hide implementation details.
-
-See :ref:`Bad C API <bad-c-api>`.
-
-
-Performance slowdown
-====================
-
-Hiding implementation details is likely to make tiny loops slower, since it
-adds function calls instead of directly accessing the memory.
-
-The performance slowdown is expected to be negligible, but has to be measured
-once a concrete implmenetation will be written.
-
-
-Alternative: Stop using the C API, use cffi
-===========================================
-
-**Goal:** Remove the public C API. Or at least, stop using it.
-
-Practical issue: ``cffi`` is not part of Python 3.7 standard library yet.
-Previous attempt to add it, in 2013: `[Python-Dev] cffi in stdlib
-<https://mail.python.org/pipermail/python-dev/2013-February/124337.html>`_.
-
-Questions:
-
-* How many popular Python modules use the C API?
-* How long would it take to rewrite a big famous Python module with ``cffi``?
-* What is the long-term transition plan to reach the "no C API" goal?
-
-
-Fix Python headers
-==================
-
-**Goal**: Make private APIs private again: Py_BUILD_CORE vs Py_LIMITED_API.
-
-Currently, the stable API (Py_LIMITED_API), the private functions (``_Py``
-prefix), functions that must only be used in CPython core (``Py_BUILD_CORE``)
-and other functions (regular C API) are all defined in the same file. It is
-easy to add a function to the wrong API by mistake.
-
-
-No public C functions if it can't be done in Python
-===================================================
-
-**Goal**: Remove public functions which do things which are not doable in pure
-Python.
-
-There shouldn't be C APIs that do something that you can't do in Python.
-
-Example: the C buffer protocol, the Python ``memoryview`` type only expose a
-subset of ``buffer`` features.
-
-
-For internal use only
-=====================
-
-The C API documentation contains a few functions with the note "For internal
-use only". Examples:
-
-* _PyImport_Init()
-* PyImport_Cleanup()
-* _PyImport_Fini()
-
-Why PyImport_Cleanup() is still a public method?
