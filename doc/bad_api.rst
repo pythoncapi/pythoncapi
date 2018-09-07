@@ -108,7 +108,7 @@ Functions
 * ``PyThreadState_GetDict()``
 * ``PyTuple_GetItem()``
 * ``PyTuple_SetItem()``
-* ``PyWeakref_GetObject()``
+* ``PyWeakref_GetObject()``: see https://mail.python.org/pipermail/python-dev/2016-October/146604.html
 
 Macros
 ------
