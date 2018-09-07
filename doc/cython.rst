@@ -7,6 +7,14 @@ Cython
 An alternative to using the C API directly is to rewrite a C extension using
 `Cython <http://cython.org/>`__ which generates C code using the C API.
 
+Cython allows you to wrap existing C code, but if you want to use Python
+objects in C or details which are not exposed at the Python level, you still
+need the Python C API to work with those.
+
+Whether to use Cython or not depends on your use case. It's not
+always the obvious choice (otherwise, those other tools would not
+exist).
+
 XXX write a better rationale why migrating to Cython!
 
 Questions:
