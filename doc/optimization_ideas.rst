@@ -36,6 +36,9 @@ It may be possible to emulate reference counting for the C API. Py_INCREF() and
 Py_DECREF() would be reimplemented using an hash table: object => reference
 counter.
 
+Larry Hastings consider to use a tracing garbage collector for :ref:`Gilectomy
+<gilectomy>`.
+
 See also :ref:`Reference counting <refcount>`.
 
 Remove the GIL: unlikely

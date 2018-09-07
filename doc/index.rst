@@ -4,9 +4,10 @@ Design a new better C API for Python
 
 Subtitle: "Make the stable API usable".
 
-PyPy and Gilectomy projects try different approaches to optimize Python, but
-both a blocked by the C API on C extensions. The C API should be "fixed" to
-unlock raw performances!
+:ref:`PyPy <cpyext>` and :ref:`Gilectomy <gilectomy>` projects are using
+different approaches to optimize Python, but their performance are limited by
+the :ref:`current C API <old-c-api>` on C extensions. The C API should be
+"fixed" to unlock raw performances!
 
 To be able to introduce backward incompatible changes to the C API without
 breaking too many C extensions, this project proposes two things:

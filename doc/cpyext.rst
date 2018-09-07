@@ -4,7 +4,7 @@
 PyPy cpyext module
 ++++++++++++++++++
 
-cpyext is the implementation of the C API in PyPy.
+cpyext is the implementation of the C API in `PyPy <https://pypy.org/>`__.
 
 See Ronan Lamy's talk `Adventures in compatibility emulating CPython's C API in
 PyPy <https://www.youtube.com/watch?v=qH0eeh-4XE8>`_ (Youtube video) at
