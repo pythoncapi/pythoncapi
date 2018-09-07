@@ -9,7 +9,7 @@ Popular C extensions using the C API
 
 * numpy
 * pandas
-* :`ref:`Cython <cython>`
+* :ref:`Cython <cython>`
 * Pillow
 * lxml
 
