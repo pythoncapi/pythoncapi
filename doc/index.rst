@@ -54,6 +54,7 @@ Pages
    cpyext
    cython
    cffi
+   gilectomy
    remove_c_api
    performance
    split_include

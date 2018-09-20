@@ -330,4 +330,10 @@ use only". Examples:
 
 Why ``PyImport_Cleanup()`` is still a public method?
 
+Public but not documented and not part of Python.h:
+
+* ``PyFrame_FastToLocalsWithError()``
+* ``PyFrame_FastToLocals()``
+* ``PyFrame_LocalsToFast()``
+
 These functions should be made really private and removed from the C API.
