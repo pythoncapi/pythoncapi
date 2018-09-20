@@ -26,7 +26,7 @@ Time scale:
 * A Python release is supported upstream for 5 years.
 * A Fedora release is supported for less than one year.
 * Ubuntu LTS releases are supported for 5 years.
-* Red Hat Entreprise Linux (RHEL) is supported for 10 years, and customers can
+* Red Hat Enterprise Linux (RHEL) is supported for 10 years, and customers can
   subscribe to an extended support up to 15 years.
 
 In 2018, the latest macOS release still only provides Python 2.7 which will

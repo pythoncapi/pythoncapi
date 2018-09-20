@@ -42,8 +42,8 @@ whereas a debug build uses an offset of **40** instead of **24**, because
 As a consequence, the compiled C extension is incompatible at the ABI level: a
 C extension has to be build twice, once in release mode and once in debug mode.
 
-To reduce the maintaince burden, :ref:`Linux vendors <os-vendors>` only provide
-C extensions compiled in release mode, making the :ref:`debug mode
+To reduce the maintenance burden, :ref:`Linux vendors <os-vendors>` only
+provide C extensions compiled in release mode, making the :ref:`debug mode
 <debug-build>` mostly unusable on Linux in practice.
 
 

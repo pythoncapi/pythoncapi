@@ -16,7 +16,7 @@ Hiding implementation details is likely to make tiny loops slower, since it
 adds function calls instead of directly accessing the memory.
 
 The performance slowdown is expected to be negligible, but has to be measured
-once a concrete implmenetation will be written.
+once a concrete implementation will be written.
 
 Question: would it be acceptable to have a new better C API if the average
 slowdown is around 10%? What if the slowdown is up to 25%? Or even 50%?

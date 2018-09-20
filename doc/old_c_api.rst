@@ -13,7 +13,7 @@ use cases like :ref:`Cython <cython>` (for best performances) and
 :ref:`debugging tools <debug-tools>`, but also for the long tail of C
 extensions on PyPI.
 
-See also :ref:`Calling conventensions <calling-conventions>`.
+See also :ref:`Calling conventions <calling-conventions>`.
 
 What is the Python C API?
 =========================

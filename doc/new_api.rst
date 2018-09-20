@@ -105,7 +105,7 @@ would become::
 
 or maybe even::
 
-    PyObject* PyList_GET_ITEM(PyObjcet *op, PyObject *i) { return PyList_GetItem(op, i); }
+    PyObject* PyList_GET_ITEM(PyObject *op, PyObject *i) { return PyList_GetItem(op, i); }
 
 Adding a **new** ``PyList_GET_ITEM()`` **function** would make the ABI larger,
 whereas the ABI should become smaller.

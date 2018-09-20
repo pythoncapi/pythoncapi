@@ -20,9 +20,9 @@ Gilectomy has multiple issues, but the two main issues are:
 
 For "Gilectomy 2.0", Hastings will be looking at using a tracing garbage
 collector (GC), rather than the CPython GC that is based on reference counts.
-Tracing GCs are more multicore friendly, but he doesn't know anything about
+Tracing GCs are more multi-core friendly, but he doesn't know anything about
 them. He also would rather not write his own GC.
 
 * https://github.com/larryhastings/gilectomy
 * May 2018: https://lwn.net/Articles/754577/
-* Pycon US 2017: https://speakerdeck.com/pycon2017/larry-hastings-the-gilectomy-hows-it-going
+* PyCon US 2017: https://speakerdeck.com/pycon2017/larry-hastings-the-gilectomy-hows-it-going

@@ -32,8 +32,8 @@ crashes when misused. Recent example of CPython bug: `bpo-25750: crash in
 type_getattro() <https://bugs.python.org/issue25750>`_.
 
 Borrowed references are a problem whenever there is no reference to borrow:
-they assume that a reified object already exists (and thus have a positive
-refcout), so that it is just borrowed.
+they assume that a referenced object already exists (and thus have a positive
+refcount), so that it is just borrowed.
 
 :ref:`Tagged pointers <tagged-pointer>` are an example of this: since there is
 no concrete ``PyObject*`` to represent the integer, it cannot easily be
@@ -138,7 +138,7 @@ Py_TYPE() corner case
 ---------------------
 
 Technically, ``Py_TYPE()`` returns a borrowed reference to a ``PyTypeObject*``.
-In pratice, for heap types, an instance holds already a strong reference
+In practice, for heap types, an instance holds already a strong reference
 to the type in ``PyObject.ob_type``. For static types, instances use a borrowed
 reference, but static types are never destroyed.
 
@@ -180,7 +180,7 @@ Bad? implementations for concrete types. Examples:
 Implementations for concrete types don't *have to* be part of the C API.
 Moreover, using directly them introduce bugs when the caller pass a subtype.
 For example, PyDict_GetItem() **must not** be used on a dict subtype, since
-``__getitem__()`` be be overriden for good reasons.
+``__getitem__()`` be be overridden for good reasons.
 
 
 Functions kept for backward compatibility
@@ -265,7 +265,7 @@ Example of macros:
 PyType_Ready() and setting directly PyTypeObject fields
 =======================================================
 
-* ``PyTypeObject`` structure should become opaquet
+* ``PyTypeObject`` structure should become opaque
 * ``PyType_Ready()`` should be removed
 
 See :ref:`Implement a PyTypeObject in C <impl-pytype>` for the rationale.

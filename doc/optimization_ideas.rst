@@ -30,10 +30,10 @@ There are discussing to use a tracing garbage collector for CPython, but this
 idea remains highly hypothetical since it very likely require deep changes in
 the C API, which is out of the scope of the :ref:`new C API project
 <new-c-api>`. The main risk is to break too many C extensions which would make
-this idea unsuable in practice.
+this idea unusable in practice.
 
 It may be possible to emulate reference counting for the C API. Py_INCREF() and
-Py_DECREF() would be reimplemented using an hash table: object => reference
+Py_DECREF() would be re-implemented using an hash table: object => reference
 counter.
 
 Larry Hastings consider to use a tracing garbage collector for :ref:`Gilectomy
@@ -51,7 +51,7 @@ smaller locks, maybe one lock per Python object.
 
 Jython has not GIL.
 
-Reference couting remains a good and convenient API for C extension. Maybe this
+Reference counting remains a good and convenient API for C extension. Maybe this
 design can be kept for the public C API for external C extensions, but CPython
 internals can be modified to avoid reference counting, like using a tracing
 garbage collector for example. Once the C API stops leaking implementation
@@ -60,11 +60,11 @@ details, many new options become possible.
 Gilectomy project is CPython 3.6 fork which tries to remove the GIL. In 2017,
 the project did not succeed yet to scale linearly performances with the number
 of threads. It seems like **reference counting is a performance killer** for
-multithreading.
+multi-threading.
 
 By the way, using atomic operations to access (increase in ``Py_INCREF()``,
 decrease and test in ``Py_DECREF()``) the reference count has been proposed,
-but experiment showed a slowdown of 20% on single threaded microbenchmarks.
+but experiment showed a slowdown of 20% on single threaded micro-benchmarks.
 
 
 .. _tagged-pointer:
@@ -77,7 +77,7 @@ See `Wikipedia: Tagged pointer
 
 Tagged pointers are used by MicroPython to reduce the memory footprint.
 
-Using tagged pointers is a common optimization technic to reduce the
+Using tagged pointers is a common optimization technique to reduce the
 boxing/unboxing cost and to reduce the memory consumption.
 
 Currently, it's not possible to implement such optimization, since most of the
