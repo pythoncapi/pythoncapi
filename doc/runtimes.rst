@@ -57,7 +57,7 @@ Debug runtime: /usr/bin/python3-dbg
 * Runtime compiled with C assertion: crash (kill itself with SIGABRT signal)
   if a C assertion fails (``assert(...);``).
 * Use the debug hooks on memory allocators by default, as ``PYTHONDEBUG=debug``
-  environment variable: detect memory under- and overflow and misusage of
+  environment variable: detect memory under- and overflow and misuse of
   memory allocators.
 * Compiled without compiler optimizations (``-Og`` or even ``-O0``) to be
   usable with a debugger like ``gdb``: python-gdb.py should work perfectly.

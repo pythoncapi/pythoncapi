@@ -67,7 +67,7 @@ Timeline
 * 2017-07: Idea proposed on python-ideas. `[Python-ideas] PEP: Hide
   implementation details in the C API
   <https://mail.python.org/pipermail/python-ideas/2017-July/046399.html>`_
-* 2017-05: Idea proposed at the Python Language Summit, during Pycon US 2017.
+* 2017-05: Idea proposed at the Python Language Summit, during PyCon US 2017.
   My `"Python performance" slides (PDF)
   <https://github.com/vstinner/conf/raw/master/2017-PyconUS/summit.pdf>`_.
   LWN article: `Keeping Python competitive
