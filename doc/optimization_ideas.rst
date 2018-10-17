@@ -156,6 +156,36 @@ it becomes possible to modify PyObject structures. The main benefit of the
 memory footprint, but the overall on performances is unknown at this point.
 
 
+O(1) conversion of bytearray to bytes
+=====================================
+
+TODO: find a better method name :-)
+
+Problem: memory copy, memory usage
+----------------------------------
+
+When a function produces a bytes string but the output length is enough, using
+a temporary bytearray object is recommended to use the efficient ``bytearray +=
+bytes`` pattern (bytearray overallocates its internal buffer and so reduce the
+number of reallocations). Problem: if the result type must be bytes, the
+bytearray must be converted to bytes... and this operation currently requires
+to copy the memory. For example, _pyio.FileIO.readall() copies the full content
+of a binary file and doubles the memory usage.
+
+In Python 3.7, a bytes object always use a single memory block: content follows
+the object header, whereas a bytearray uses two memory blocks. It's not
+possible to transfer data from bytearray to bytes to implement a O(1)
+conversion.
+
+Solution: support bytes using two memory blocks
+-----------------------------------------------
+
+If the bytes type is modified to also support storing data in a second memory
+block, it becomes possible to implement O(1) conversion of bytearray to bytes.
+The bytearray would pass its memory block to the bytes object and then "loose
+its content" (becomes an empty buffer).
+
+
 And more!
 =========
 
