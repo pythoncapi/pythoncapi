@@ -302,9 +302,28 @@ Weird ``PyObject_CallFunction()`` API: `bpo-28977
 PyPy requests
 -------------
 
-* Deprecate finalizer API.
-* Deprecate Unicode API introduced by the PEP 393, compact strings, like
-  PyUnicode_4BYTE_DATA(str_obj).
+Finalizer API
+^^^^^^^^^^^^^
+
+Deprecate finalizer API: PyTypeObject.tp_finalize of `PEP 442
+<https://www.python.org/dev/peps/pep-0442/>`_. Too specific to the CPython
+garbage collector? Destructors (``__del__()``) are not deterministic in PyPy
+because of their garbage collector: context manager must be used
+(ex: ``with file:``), or resources must be explicitly released
+(ex: ``file.close()``).
+
+Cython uses ``_PyGC_FINALIZED()``, see:
+
+* https://github.com/cython/cython/issues/2721
+* https://bugs.python.org/issue35081#msg330045
+* `Cython generate_dealloc_function()
+<https://github.com/cython/cython/blob/da657c8e326a419cde8ae6ea91be9661b9622504/Cython/Compiler/ModuleNode.py#L1442-L1456>`_.
+
+Compact Unicode API
+^^^^^^^^^^^^^^^^^^^
+
+Deprecate Unicode API introduced by the PEP 393, compact strings, like
+``PyUnicode_4BYTE_DATA(str_obj)``.
 
 PyArg_ParseTuple
 ----------------
