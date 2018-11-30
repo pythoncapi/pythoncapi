@@ -73,6 +73,8 @@ tuple without increasing the reference counter).
 CPython contains ``Doc/data/refcounts.dat`` (file is edited manually) which
 documents how functions handle reference count.
 
+See also :ref:`functions steal references <steal-ref>`.
+
 Functions
 ^^^^^^^^^
 
@@ -99,7 +101,6 @@ Functions
 * ``PyMethod_Class()``
 * ``PyMethod_Function()``
 * ``PyMethod_Self()``
-* ``PyModule_AddObject()``: steal a reference on success, but doesn't on error
 * ``PyModule_GetDict()``
 * ``PyNumber_Check()``
 * ``PyObject_Init()``
@@ -279,6 +280,23 @@ Integer overflow
 
 See also ``PyLong_AsLongAndOverflow()``.
 
+
+.. _steal-ref:
+
+Functions stealing references
+=============================
+
+* ``PyContext_Exit()``: *ctx*
+* ``PyContextVar_Reset()``: *token*
+* ``PyErr_Restore()``: *type*, *value*, *traceback*
+* ``PySet_Discard()``: *key*, no effect if key not found
+* ``PyString_ConcatAndDel()``: *newpart*
+* ``Py_DECREF()``: *o*
+* ``Py_XDECREF()``: *o*, if *o* is not NULL
+* ``PyModule_AddObject()``: *o* on success, no change on error!
+
+See also :ref:`borrowed references <borrowed-ref>`.
+
 Open questions
 ==============
 
@@ -317,7 +335,7 @@ Cython uses ``_PyGC_FINALIZED()``, see:
 * https://github.com/cython/cython/issues/2721
 * https://bugs.python.org/issue35081#msg330045
 * `Cython generate_dealloc_function()
-<https://github.com/cython/cython/blob/da657c8e326a419cde8ae6ea91be9661b9622504/Cython/Compiler/ModuleNode.py#L1442-L1456>`_.
+  <https://github.com/cython/cython/blob/da657c8e326a419cde8ae6ea91be9661b9622504/Cython/Compiler/ModuleNode.py#L1442-L1456>`_.
 
 Compact Unicode API
 ^^^^^^^^^^^^^^^^^^^
