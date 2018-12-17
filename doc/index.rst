@@ -99,4 +99,5 @@ Table of Contents
    remove_c_api
    performance
    split_include
+   pyhandle
 
