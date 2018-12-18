@@ -100,4 +100,5 @@ Table of Contents
    performance
    split_include
    pyhandle
+   deprecate
 
