@@ -101,4 +101,5 @@ Table of Contents
    split_include
    pyhandle
    deprecate
+   python_ir
 
