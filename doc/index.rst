@@ -58,6 +58,10 @@ Pages
    remove_c_api
    performance
    split_include
+   pyhandle
+   deprecate
+   python_ir
+
 
 Links
 =====
