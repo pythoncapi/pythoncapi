@@ -10,6 +10,8 @@ implement new optimizations.
 
 See :ref:`Experimental runtime <exp-runtime>`.
 
+.. _remove-debug-checks:
+
 Remove debug checks
 ===================
 

@@ -67,6 +67,20 @@ Debug runtime: /usr/bin/python3-dbg
 
 For example, the debug runtime can check that the GIL is held by the caller.
 
+See also
+
+* :ref:`Remove debug checks <remove-debug-checks>`
+* Rejected idea: `Check index in PyTuple_GET_ITEM/PyTuple_SET_ITEM in debug
+  mode <https://bugs.python.org/issue35337>`__ and `PyTuple_SET_ITEM could
+  check bounds in debug mode <https://bugs.python.org/issue14614>`__. Issues:
+
+  * Serhiy Storchaka: "I think we can break this only after adding public API for accessing
+    internal storage of a tuple: PyTuple_ITEMS()."
+  * Stefan Krah: "I'm using &PyTuple_GET_ITEM(args, 0), so Serhiy's concern is
+    not theoretical."
+  * Stefan Behnel: "If this is really just about debugging, then I would
+    suggest to not break existing code at all."
+
 .. _exp-runtime:
 
 New experimental runtime: python3-exp
