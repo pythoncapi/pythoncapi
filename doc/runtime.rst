@@ -91,3 +91,4 @@ Links
 * https://bugs.python.org/issue36876
 * https://bugs.python.org/issue36877
 * https://mail.python.org/archives/list/capi-sig@python.org/thread/RBLU35OUT2KDFCABK32VNOH4UKSKEUWW/
+* https://twitter.com/VictorStinner/status/1125887394220269568
