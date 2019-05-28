@@ -1,3 +1,5 @@
+.. _opaque-pyobject:
+
 =========================
 Opaque PyObject structure
 =========================
@@ -24,7 +26,7 @@ The issue is that ``obj->ob_type`` is accessed directly. It prevents to
 implement :ref:`Tagged pointers <tagged-pointer>` for example.
 
 By the way, ``Py_TYPE()`` returns a :ref:`borrowed reference <borrowed-ref>`
-which is another kind of problem.
+which is another kind of problem. See :ref:`Py_TYPE() corner case <py-type>`.
 
 In the long term, ``PyObject`` structure should be opaque. Accessing
 ``ob_refcnt`` and ``ob_type`` fields should always go through functions.

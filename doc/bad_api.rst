@@ -149,9 +149,17 @@ Hugh Fisher summarized:
    and incur a performance hit, to eliminate a rare bug from badly written
    code.
 
-See the discussion on capi-sig: `Open questions about borrowed reference.
-<https://mail.python.org/mm3/archives/list/capi-sig@python.org/thread/V5EMBIIJFJGJGBQPLCFFXCHAUFNTA45H/>`_
-(Sept 2018).
+Discussions:
+
+* `[Python-Dev] bpo-34595: How to format a type name?
+  <https://mail.python.org/pipermail/python-dev/2018-September/155150.html>`_
+  (Sept 2018)
+* capi-sig: `Open questions about borrowed reference.
+  <https://mail.python.org/mm3/archives/list/capi-sig@python.org/thread/V5EMBIIJFJGJGBQPLCFFXCHAUFNTA45H/>`_
+  (Sept 2018).
+
+
+See also :ref:`Opaque PyObject structure <opaque-pyobject>`.
 
 
 Duplicated functions
