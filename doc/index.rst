@@ -62,6 +62,7 @@ Pages
    deprecate
    python_ir
    runtime
+   opaque_pyobject
 
 
 Links
@@ -101,6 +102,7 @@ Table of Contents
    cpyext
    cython
    cffi
+   gilectomy
    remove_c_api
    performance
    split_include
@@ -108,4 +110,4 @@ Table of Contents
    deprecate
    python_ir
    runtime
-
+   opaque_pyobject
