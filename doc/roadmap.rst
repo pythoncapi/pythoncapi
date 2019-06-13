@@ -30,6 +30,12 @@ Open questions
 Status
 ======
 
+* 2019-05-01: `Status of the stable API and ABI in Python 3.8
+  <https://github.com/vstinner/conf/blob/master/2019-Pycon/status_stable_api_abi.pdf>`_,
+  slides of Victor Stinner's lightning talk at the Language Summit (during
+  Pycon US 2019)
+* 2019-02-22: `[capi-sig] Update on CPython header files reorganization
+  <https://mail.python.org/archives/list/capi-sig@python.org/thread/WS6ATJWRUQZESGGYP3CCSVPF7OMPMNM6/>`_
 * 2018-07-29: `pythoncapi project <https://github.com/vstinner/pythoncapi>`_
   created on GitHub
 * 2017-12-21: It's an idea. There is an old PEP draft, but no implementation,
