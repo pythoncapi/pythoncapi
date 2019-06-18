@@ -14,3 +14,6 @@ levels:
 In the past, many functions have been added to the wrong API level, just
 because everything is at the same place. To prevent such mistakes, headers
 files should be reorganized with clearly separated files.
+
+* https://bugs.python.org/issue35134
+* https://bugs.python.org/issue35081
