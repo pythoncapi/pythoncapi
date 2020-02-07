@@ -366,15 +366,6 @@ Is it an issue? Should we do something?
 For internal use only
 =====================
 
-The C API documentation contains a few functions with the note "For internal
-use only". Examples:
-
-* ``_PyImport_Init()``
-* ``PyImport_Cleanup()``
-* ``_PyImport_Fini()``
-
-Why ``PyImport_Cleanup()`` is still a public method?
-
 Public but not documented and not part of Python.h:
 
 * ``PyFrame_FastToLocalsWithError()``
