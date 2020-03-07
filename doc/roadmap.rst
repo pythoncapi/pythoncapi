@@ -40,6 +40,9 @@ Status
   created on GitHub
 * 2017-12-21: It's an idea. There is an old PEP draft, but no implementation,
   the PEP has no number and was not accepted yet (nor really proposed).
+* 2017-07-11:
+  `[Python-ideas] PEP: Hide implementation details in the C API
+  <https://mail.python.org/pipermail/python-ideas/2017-July/046399.html>`_
 
 Players
 =======
