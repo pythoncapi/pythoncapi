@@ -89,6 +89,9 @@ Note: ARM64 was recently extended its address space to 48 bits, causing
 issue in LuaJIT: `47 bit address space restriction on ARM64
 <https://github.com/LuaJIT/LuaJIT/issues/49>`_.
 
+Neil Schemenauer PoC (Sept 2018):
+https://mail.python.org/archives/list/capi-sig@python.org/thread/EGAY55ZWMF2WSEMP7VAZSFZCZ4VARU7L/#EGAY55ZWMF2WSEMP7VAZSFZCZ4VARU7L
+
 Copy-on-Write (CoW): doable
 ===========================
 
