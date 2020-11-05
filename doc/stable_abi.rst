@@ -36,6 +36,18 @@ Links
   * `bpo-40601: Hide static types from the limited C API
     <https://bugs.python.org/issue40601>`_
 
+* `PEP 573 -- Module State Access from C Extension Methods
+  <https://www.python.org/dev/peps/pep-0573/>`_
+
+  * Python 3.10 has a new ``_PyType_GetModuleByDef()`` function
+  * Python 3.9 added:
+
+    * New PyType_FromModuleAndSpec()
+    * New PyType_GetModuleState()
+    * New METH_METHOD calling convention flag
+    * New PyCMethod function signature
+    * New ``defining_class`` type in Argument Clinic
+
 * `PEP 630 -- Isolating Extension Modules
   <https://www.python.org/dev/peps/pep-0630/>`_ (Petr Viktorin)
 
