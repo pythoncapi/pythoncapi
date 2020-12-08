@@ -27,11 +27,11 @@ does not scale for parallelism with multithreading.
 
 A tracing and moving garbage collector would be more efficient. The garbage
 collection could be done in multiple steps in separated thread rather than
-having long delays causing by the CPython blocking stop-the-world gabage
+having long delays causing by the CPython blocking stop-the-world garbage
 collector.
 
-The ability to deference pointers like ``PyObject*`` make the implementation
-of a moving gabarge collector more complicated. Only using handles would make
+The ability to deference pointers like ``PyObject*`` makes the implementation
+of a moving garbarge collector more complicated. Only using handles would make
 the implementation simpler.
 
 Run Python threads in parallel
@@ -42,7 +42,7 @@ of the C API. The GIL has many convenient advantages to simplify the
 implementation. But it basically limits CPython to a single thread to run
 CPU-bound workload distributed in multiple threads.
 
-Per-object locks would allow to help to scale threads on multiple threads.
+Per-object locks would allow to help scaling threads on multiple CPU.
 
 More efficient data structures (boxing/unboxing)
 ------------------------------------------------
@@ -71,28 +71,28 @@ member and so requires ``PyTupleObject`` to only store ``PyObject*`` objects.
 
 
 The C API should be modified to abstract accesses to objects through function
-calls rather than using macros which access directly to structure members.
+calls rather than using macros which access directly structure members.
 
 Structures must be excluded from the public C API: become "opaque".
 
 PyObject* type can be dereferenced (use handles)
 ------------------------------------------------
 
-Since structures a public, it is possible to deference pointers to access
+Since structures are public, it is possible to deference pointers to access
 structure members. For example, access directly to ``PyObject.ob_type`` member
 from a ``PyObject*`` pointer, or access directly to
 ``PyTupleObject.ob_type[index]`` from a ``PyTupleObject*`` pointer.
 
-Using opaque **handles** like HPy what does would prevent that.
+Using opaque **handles** like HPy does would prevent that.
 
 Borrowed references (avoid them)
 --------------------------------
 
-Many C API functions like ``PyDict_GetItem()`` or ``PyTuple_GetItem()`` return
-a borrowed references. They make the assumption that all objects are actual
+Many C API functions like ``PyDict_GetItem()`` or ``PyTuple_GetItem()`` return 
+a borrowed reference. They make the assumption that all objects are actual
 objects. For example, if tagged pointers are implemented, a ``PyObject*`` does
 not point to a concrete object: the value must be boxed to get a ``PyObject*``.
-The problem with borrowed references is to decide when it is safe to destroy
+The problem with borrowed reference is to decide when it is safe to destroy
 the temporary ``PyObject*`` object. One heuristic is to consider that it must
 remain alive as long as its container (ex: a list) remains alive.
 
@@ -140,4 +140,4 @@ similar issue. Example: ``&PyTuple_GET_ITEM()`` is used to get
 
 The ``PyObject_GetBuffer()`` is a sane API: it requires the caller to call
 ``PuBuffer_Release()`` to release the ``Py_buffer`` object. Memory can be
-copied if needed to allow to move the object while the buffer is used.
+copied if needed to allow moving the object while the buffer is used.
