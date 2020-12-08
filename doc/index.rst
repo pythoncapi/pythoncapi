@@ -38,6 +38,7 @@ Pages
 .. toctree::
    :maxdepth: 1
 
+   optimize_python
    rationale
    roadmap
    bad_api
