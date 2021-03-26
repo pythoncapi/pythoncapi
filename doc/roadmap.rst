@@ -39,6 +39,9 @@ Status
   Pycon US 2019)
 * 2019-02-22: `[capi-sig] Update on CPython header files reorganization
   <https://mail.python.org/archives/list/capi-sig@python.org/thread/WS6ATJWRUQZESGGYP3CCSVPF7OMPMNM6/>`_
+* 2018-09-04: Creation of CPython fork to experiment a new incompatible C
+  API excluding borrowed references and not access directly structure
+  members.
 * 2018-07-29: `pythoncapi project <https://github.com/vstinner/pythoncapi>`_
   created on GitHub
 * 2018-06: capi-sig mailing list migrated to Mailman 3
