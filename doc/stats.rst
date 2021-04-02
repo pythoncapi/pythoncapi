@@ -8,7 +8,7 @@ Line numbers
 Number of C API line numbers per Python version:
 
 =======  =============  ===========  ============  =======
-Version  Public         CPython      Internal      Total
+Python   Public         CPython      Internal      Total
 =======  =============  ===========  ============  =======
 2.7      12686 (100%)   0            0             12686
 3.6      16011 (100%)   0            0             16011
@@ -30,7 +30,7 @@ Symbols
 Symbols exported with PyAPI_FUNC() and PyAPI_DATA():
 
 =======  ===========
-Version  Symbols
+Python   Symbols
 =======  ===========
 2.7      1098
 3.6      1460
