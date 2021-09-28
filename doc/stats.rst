@@ -103,7 +103,12 @@ Python  Structures
 ======  ==========
 
 These numbers exclude opaque structures like PyInterpreterState (since Python
-3.8).
+3.8). The grep command is not exact. For example, PyODictObject is seen as
+public, whereas the structure is opaque::
+
+    typedef struct _odictobject PyODictObject;
+
+The _odictobject structure is only defined in Objects/odictobject.c.
 
 Command::
 
