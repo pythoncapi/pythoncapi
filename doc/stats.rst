@@ -18,11 +18,11 @@ Python   Public         CPython      Internal      Total
 3.10     10305 (52%)    4513 (23%)   5092 (26%)    19910
 =======  =============  ===========  ============  =======
 
-Comands:
+Commands:
 
-* public: ``wc -l Include/*.h``
-* cpython: ``wc -l Include/cpython/*.h``
-* internal: ``wc -l Include/internal/*.h``
+* Public: ``wc -l Include/*.h``
+* CPython: ``wc -l Include/cpython/*.h``
+* Internal: ``wc -l Include/internal/*.h``
 
 Symbols
 =======
@@ -54,7 +54,7 @@ exporting symbols which are not **explicitly** exported.
 
 The ``make smelly`` command checks for public symbols of libpython and C
 extension which are prefixed by ``Py`` or ``_Py``. See
-``Tools/scripts/smelly.py`` script.
+the ``Tools/scripts/smelly.py`` script.
 
 Functions defined as macros and static inline functions
 =======================================================
