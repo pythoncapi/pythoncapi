@@ -7,20 +7,20 @@ Line numbers
 
 Number of C API line numbers per Python version:
 
-=======  =============  ===========  ============  =======
-Python   Public         CPython      Internal      Total
-=======  =============  ===========  ============  =======
-2.7      12686 (100%)   0            0             12686
-3.6      16011 (100%)   0            0             16011
-3.7      16517 (96%)    0            705 (4%)      17222
-3.8      13160 (70%)    3417 (18%)   2230 (12%)    18807
-3.9      12264 (62%)    4343 (22%)   3066 (16%)    19673
-3.10     10305 (52%)    4513 (23%)   5092 (26%)    19910
-=======  =============  ===========  ============  =======
+=======  ==============  ===========  ============  =======
+Python   Limited API     CPython API  Internal API  Total
+=======  ==============  ===========  ============  =======
+2.7      12,686 (100%)   0            0             12,686
+3.6      16,011 (100%)   0            0             16,011
+3.7      16,517 (96%)    0            705 (4%)      17,222
+3.8      13,160 (70%)    3,417 (18%)  2,230 (12%)   18,807
+3.9      12,264 (62%)    4,343 (22%)  3,066 (16%)   19,673
+3.10     10,305 (52%)    4,513 (23%)  5,092 (26%)   19,910
+=======  ==============  ===========  ============  =======
 
 Commands:
 
-* Public: ``wc -l Include/*.h``
+* Limited: ``wc -l Include/*.h``
 * CPython: ``wc -l Include/cpython/*.h``
 * Internal: ``wc -l Include/internal/*.h``
 
@@ -47,7 +47,7 @@ Command (total)::
 
 Command (private)::
 
-    grep -E 'PyAPI_(FUNC|DATA)' Include/*.h Include/cpython/*.h|grep ' _Py'|wc -l
+    grep -E 'PyAPI_(FUNC|DATA)' Include/*.h Include/cpython/*.h|grep -v ' _Py'|wc -l
 
 Since Python 3.9, Python is now built with ``-fvisibility=hidden`` to avoid
 exporting symbols which are not **explicitly** exported.
