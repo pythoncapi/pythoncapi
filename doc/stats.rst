@@ -24,6 +24,29 @@ Commands:
 * CPython: ``wc -l Include/cpython/*.h``
 * Internal: ``wc -l Include/internal/*.h``
 
+Header file numbers
+===================
+
+Number of header file numbers per Python version:
+
+=======  ==============  ===========  ============  ==========
+Python   Limited API     CPython API  Internal API  Total
+=======  ==============  ===========  ============  ==========
+2.7      91              0            0             91
+3.6      99 (+8)         0            0             99 (+8)
+3.7      99 (same)       0            11 (+11)      110 (+11)
+3.8      97 (-2)         15 (+15)     21 (+10)      133 (+23)
+3.9      98 (+1)         24 (+9)      33 (+12)      155 (+22)
+3.10     81 (-17)        32 (+8)      48 (+15)      161 (+6)
+=======  ==============  ===========  ============  ==========
+
+Commands:
+
+* Limited: ``ls Include/*.h|wc -l``
+* CPython: ``ls Include/cpython/*.h|wc -l``
+* Internal: ``ls Include/internal/*.h|wc -l``
+
+
 Symbols
 =======
 
