@@ -16,6 +16,7 @@ Python   Limited API     CPython API  Internal API  Total
 3.8      13,160 (70%)    3,417 (18%)  2,230 (12%)   18,807
 3.9      12,264 (62%)    4,343 (22%)  3,066 (16%)   19,673
 3.10     10,395 (51%)    4,584 (22%)  5,520 (27%)   20,499
+3.11     9,620 (41%)     4,865 (21%)  9,227 (38%)   23,712
 =======  ==============  ===========  ============  =======
 
 Commands:
@@ -38,6 +39,7 @@ Python   Limited API     CPython API  Internal API  Total
 3.8      97 (-2)         15 (+15)     21 (+10)      133 (+23)
 3.9      98 (+1)         24 (+9)      33 (+12)      155 (+22)
 3.10     81 (-17)        32 (+8)      48 (+15)      161 (+6)
+3.11     73 (-8)         42 (+10)     66 (+18)      181 (+20)
 =======  ==============  ===========  ============  ==========
 
 Commands:
@@ -52,25 +54,33 @@ Symbols
 
 Symbols exported with PyAPI_FUNC() and PyAPI_DATA():
 
-=======  ==============  ===============  ===========
-Python   Public          Private          Total
-=======  ==============  ===============  ===========
-2.7      891             207              1098
-3.6      1041 (+150)     419 (+212)       1460 (+362)
-3.7      1068 (+27)      479 (+60)        1547 (+87)
-3.8      1105 (+37)      456 (-23)        1561 (+14)
-3.9      1115 (+10)      437 (-19)        1552 (-9)
-3.10     1080 (-35)      436 (-1)         1516 (-36)
-3.11     1062 (-18)      437 (+1)         1499 (-17)
-=======  ==============  ===============  ===========
+=======  ============  ===========  ==========  ===========
+Python   Public        Private      Internal    Total
+=======  ============  ===========  ==========  ===========
+2.7      891           207          0           1098
+3.6      1041 (+150)   419 (+212)   0           1460 (+362)
+3.7      1068 (+27)    479 (+60)    22          1569 (+109)
+3.8      1105 (+37)    456 (-23)    91 (+69)    1652 (+83)
+3.9      1115 (+10)    439 (-17)    124 (+33)   1678 (+26)
+3.10     1080 (-35)    439 (same)   129 (+5)    1648 (-30)
+3.11     1083 (+3)     379 (-60)    187 (+58)   1649 (+1)
+=======  ============  ===========  ==========  ===========
 
 Command (total)::
 
-    grep -E 'PyAPI_(FUNC|DATA)' Include/*.h Include/cpython/*.h|wc -l
+    grep -E 'PyAPI_(FUNC|DATA)' Include/*.h Include/cpython/*.h Include/internal/*.h|wc -l
 
-Command (private)::
+Command (public)::
 
     grep -E 'PyAPI_(FUNC|DATA)' Include/*.h Include/cpython/*.h|grep -v ' _Py'|wc -l
+
+Command (public + private)::
+
+    grep -E 'PyAPI_(FUNC|DATA)' Include/*.h Include/cpython/*.h|wc -l
+
+Command (internal)::
+
+    grep -E 'PyAPI_(FUNC|DATA)' Include/internal/*.h|wc -l
 
 Since Python 3.9, Python is now built with ``-fvisibility=hidden`` to avoid
 exporting symbols which are not **explicitly** exported.
@@ -94,7 +104,7 @@ Python  Macro  Static inline  Total
 3.8     399    14             413
 3.9     406    30             436
 3.10    412    36             448
-3.11    412    40             452
+3.11    399    29             428
 ======  =====  =============  =====
 
 If a function is defined as a private static inline function and exposed as a
