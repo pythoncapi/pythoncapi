@@ -25,8 +25,8 @@ Commands:
 * CPython: ``wc -l Include/cpython/*.h``
 * Internal: ``wc -l Include/internal/*.h``
 
-Header file numbers
-===================
+File numbers
+============
 
 Number of header file numbers per Python version:
 
