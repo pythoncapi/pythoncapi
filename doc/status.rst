@@ -5,7 +5,7 @@ Status of the new Python C API
 Status
 ======
 
-2021
+2022
 ----
 
 * 2022-03-04: The `pythoncapi-compat project moves
