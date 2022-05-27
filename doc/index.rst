@@ -38,9 +38,9 @@ Pages
 .. toctree::
    :maxdepth: 1
 
+   status
    optimize_python
    rationale
-   roadmap
    bad_api
    new_api
    runtimes
