@@ -1,8 +1,8 @@
 .. _stable-abi:
 
-++++++++++++++++++
-Python stable ABI?
-++++++++++++++++++
++++++++++++++++++
+Python stable ABI
++++++++++++++++++
 
 Links
 =====

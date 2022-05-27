@@ -39,6 +39,8 @@ Pages
    :maxdepth: 1
 
    status
+   stats
+   stats2
    optimize_python
    rationale
    bad_api
@@ -64,7 +66,6 @@ Pages
    python_ir
    runtime
    opaque_pyobject
-   stats
 
 
 Links
@@ -88,8 +89,9 @@ Table of Contents
 .. toctree::
    :maxdepth: 2
 
+   stats
+   status
    rationale
-   roadmap
    bad_api
    new_api
    runtimes
@@ -113,4 +115,3 @@ Table of Contents
    python_ir
    runtime
    opaque_pyobject
-   stats
