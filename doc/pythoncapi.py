@@ -20,6 +20,19 @@ RE_STRUCT_START = re.compile(r'^(?:typedef +)?struct(?: +([A-Za-z0-9_]+))? *{', 
 RE_STRUCT_END = re.compile(r'^}(?: +([A-Za-z0-9_]+))? *;', re.MULTILINE)
 
 
+TYPEDEFS = {
+    '_object': 'PyObject',
+    '_longobject': 'PyLongObject',
+    '_typeobject': 'PyTypeObject',
+    'PyCodeObject': 'PyCodeObject',
+    '_frame': 'PyFrameObject',
+    '_ts': 'PyThreadState',
+    '_is': 'PyInterpreterState',
+    '_xid': '_PyCrossInterpreterData',
+    '_traceback': 'PyTracebackObject',
+}
+
+
 def files(path):
     return glob.glob(os.path.join(path, '*.h'))
 
@@ -42,6 +55,8 @@ def _get_types(filename, names):
             name = struct_name
         if not name:
             raise Exception(f"structure has no name: {filename}: {match.group()})")
+        if name in TYPEDEFS:
+            name = TYPEDEFS[name]
         names.add(name)
 
 
