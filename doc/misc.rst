@@ -1,0 +1,110 @@
+++++++++++
+Misc notes
+++++++++++
+
+Public structures of Python types in Python 3.12 (49)
+=====================================================
+
+* PyASCIIObject
+* PyAsyncGenObject
+* PyAttributeErrorObject
+* PyBaseExceptionGroupObject
+* PyBaseExceptionObject
+* PyByteArrayObject
+* PyBytesObject
+* PyCFunctionObject
+* PyCMethodObject
+* PyCellObject
+* PyCompactUnicodeObject
+* PyComplexObject
+* PyCoroObject
+* PyCursesWindowObject
+* PyDescrObject
+* PyDictObject
+* PyFloatObject
+* PyFunctionObject
+* PyGenObject
+* PyGetSetDescrObject
+* PyHeapTypeObject
+* PyImportErrorObject
+* PyInstanceMethodObject
+* PyListObject
+* PyLongObject
+* PyMemberDescrObject
+* PyMemoryViewObject
+* PyMethodDescrObject
+* PyMethodObject
+* PyModuleDef
+* PyModuleDef_Base
+* PyNameErrorObject
+* PyOSErrorObject
+* PyObject
+* PySetObject
+* PySliceObject
+* PyStopIterationObject
+* PySyntaxErrorObject
+* PySystemExitObject
+* PyTracebackObject
+* PyTupleObject
+* PyTypeObject
+* PyUnicodeErrorObject
+* PyUnicodeObject
+* PyVarObject
+* PyWrapperDescrObject
+* _PyDictViewObject
+* _PyManagedBufferObject
+* _PyWeakReference
+
+Structures which don't inherit from PyObject (50)
+=================================================
+
+* CallStats
+* ObjectStats
+* OpcodeStats
+* PyAsyncMethods
+* PyBufferProcs
+* PyCodeAddressRange
+* PyCompilerFlags
+* PyConfig
+* PyDateTime_CAPI
+* PyFrameConstructor
+* PyFutureFeatures
+* PyGetSetDef
+* PyHash_FuncDef
+* PyMappingMethods
+* PyMemAllocatorEx
+* PyMemberDef
+* PyMethodDef
+* PyModuleDef_Slot
+* PyNumberMethods
+* PyObjectArenaAllocator
+* PyPreConfig
+* PySequenceMethods
+* PyStats
+* PyStatus
+* PyStructSequence_Desc
+* PyStructSequence_Field
+* PyThreadState
+* PyTraceInfo
+* PyType_Slot
+* PyType_Spec
+* PyWideStringList
+* Py_buffer
+* Py_complex
+* SpecializationStats
+* _PyArg_Parser
+* _PyBytesWriter
+* _PyCFrame
+* _PyCrossInterpreterData
+* _PyErr_StackItem
+* _PyStackChunk
+* _PyUnicodeWriter
+* _Py_Identifier
+* _Py_clock_info_t
+* _Py_tss_t
+* _frozen
+* _inittab
+* _opaque
+* _specialization_cache
+* setentry
+* wrapperbase

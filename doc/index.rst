@@ -32,57 +32,6 @@ Existing C extensions will still be supported and will not have to be modified.
 The :ref:`old C API <old-c-api>` is not deprecated and there is no plan
 penalize users of the old C API.
 
-Pages
-=====
-
-.. toctree::
-   :maxdepth: 1
-
-   status
-   stats
-   stats2
-   optimize_python
-   rationale
-   bad_api
-   new_api
-   runtimes
-   old_c_api
-   type_object
-   optimization_ideas
-   backward_compatibility
-   os_vendors
-   calling_conventions
-   stable_abi
-   consumers
-   cpyext
-   cython
-   cffi
-   gilectomy
-   remove_c_api
-   performance
-   split_include
-   pyhandle
-   deprecate
-   python_ir
-   runtime
-   opaque_pyobject
-
-
-Links
-=====
-
-* `Python C API <https://pythoncapi.readthedocs.io/>`_ (this documentation)
-* `CPython fork implementing Py_NEWCAPI
-  <http://github.com/pythoncapi/cpython/>`_
-* `pythoncapi GitHub project <https://github.com/pythoncapi/pythoncapi/>`_
-  (this documentation can be found in the ``doc/`` subdirectory).
-* `capi-sig mailing list
-  <https://mail.python.org/mm3/mailman3/lists/capi-sig.python.org/>`_
-* `py3c <http://py3c.readthedocs.org>`_
-  (`py3c on GitHub <https://github.com/encukou/py3c/tree/master/include/py3c>`_):
-  A Python 2/3 compatibility layer for C extensions.
-
-
 Table of Contents
 =================
 
@@ -115,3 +64,5 @@ Table of Contents
    python_ir
    runtime
    opaque_pyobject
+   links
+   misc
