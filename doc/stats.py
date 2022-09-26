@@ -263,16 +263,6 @@ def structures():
     table_compute_diff(lines)
     render_table(lines)
 
-    paragraph("""
-These numbers exclude opaque structures like PyInterpreterState (since Python
-3.8). The grep command is not exact. For example, PyODictObject is seen as
-public, whereas the structure is opaque::
-
-    typedef struct _odictobject PyODictObject;
-
-The _odictobject structure is only defined in Objects/odictobject.c.
-    """)
-
 
 def render_page():
     main_title()
