@@ -7,13 +7,7 @@ import os
 import subprocess
 import sys
 
-
-# Checkout of Python Git repository, one directory per branch:
-# 2.7/ = Python 2.7 branch
-# 3.6/ = Python 3.6 branch
-# main/ = Python main branch
-# etc.
-PYTHON_ROOT = '/home/vstinner/python'
+from pythoncapi import files, PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API, get_types
 
 
 RST_FILENAME = 'stats.rst'
@@ -32,18 +26,9 @@ COLUMNS = ['Python', 'Limited API', 'CPython API', 'Internal API', 'Total']
 TABLE_SPACE = '  '
 
 
-PATH_LIMITED_API = 'Include'
-PATH_CPYTHON_API = os.path.join('Include', 'cpython')
-PATH_INTERNAL_API = os.path.join('Include', 'internal')
-
-
 output = []
 def log(msg=''):
     output.append(msg)
-
-
-def files(path):
-    return glob.glob(os.path.join(path, '*.h'))
 
 
 def get_output(cmd):
@@ -266,12 +251,14 @@ counted as 2 functions, whereas only the "Py_INCREF" name is public.
 
 def structures():
     display_title('Structures')
-    paragraph('Public structures in the Python C API:')
+    paragraph('Structures in the Python C API:')
 
-    lines = [('Python', 'Structures')]
+    lines = [COLUMNS]
     for name in iter_branches():
-        count = get_int("grep 'typedef struct' Include/*.h Include/cpython/*.h|wc -l")
-        line = [name, count]
+        limited = len(get_types(PATH_LIMITED_API))
+        cpython = len(get_types(PATH_CPYTHON_API))
+        internal = len(get_types(PATH_INTERNAL_API))
+        line = [name, limited, cpython, internal, limited + cpython + internal]
         lines.append(line)
     table_compute_diff(lines)
     render_table(lines)
