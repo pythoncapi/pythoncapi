@@ -12,8 +12,11 @@ def main():
         sys.exit(1)
 
     limited = get_types(PATH_LIMITED_API)
-    cpython = get_types(PATH_CPYTHON_API)
-    names = sorted(set(limited) | set(cpython))
+    if 1:
+        cpython = get_types(PATH_CPYTHON_API)
+        names = sorted(set(limited) | set(cpython))
+    else:
+        names = limited
     for name in names:
         print("*", name)
     print()
