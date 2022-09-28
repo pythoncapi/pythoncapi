@@ -64,5 +64,6 @@ Table of Contents
    python_ir
    runtime
    opaque_pyobject
+   resource
    links
    misc
