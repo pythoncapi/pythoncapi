@@ -10,8 +10,26 @@ Subtitle: "Make the stable API usable".
 * `capi-sig mailing list
   <https://mail.python.org/mm3/mailman3/lists/capi-sig.python.org/>`_
 
-Content:
+Content
+=======
 
 * ``doc/`` subdirectory: the current documentation
 * ``refcounts_borrowed.py``: search for functions returning a borrowed
   reference from CPython ``Doc/data/refcounts.dat`` file.
+
+Build the documentation
+=======================
+
+Work in the ``doc/`` sub-directory.
+
+Install dependencies::
+
+    python -m pip install --user --upgrade sphinx
+
+Build the documentation::
+
+    make html
+
+Regenerate statistics::
+
+    python stats.py
