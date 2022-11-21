@@ -202,16 +202,16 @@ def file_numbers():
     render_table(lines)
 
 
-def symbols():
-    display_title('Symbols')
-    paragraph('Symbols exported with PyAPI_FUNC() and PyAPI_DATA():')
+def list_functions():
+    display_title('Functions')
+    paragraph('Functions exported with PyAPI_FUNC():')
     lines = [('Python', 'Public', 'Private', 'Internal', 'Total')]
     for name in iter_branches():
-        total = get_int("grep -E 'PyAPI_(FUNC|DATA)' Include/*.h Include/cpython/*.h Include/internal/*.h|wc -l")
-        public = get_int("grep -E 'PyAPI_(FUNC|DATA)' Include/*.h Include/cpython/*.h|grep -v ' _Py'|wc -l")
-        public_private = get_int("grep -E 'PyAPI_(FUNC|DATA)' Include/*.h Include/cpython/*.h|wc -l")
+        total = get_int("grep 'PyAPI_FUNC' Include/*.h Include/cpython/*.h Include/internal/*.h|wc -l")
+        public = get_int("grep 'PyAPI_FUNC' Include/*.h Include/cpython/*.h|grep -v ' _Py'|wc -l")
+        public_private = get_int("grep 'PyAPI_FUNC' Include/*.h Include/cpython/*.h|wc -l")
         private = public_private - public
-        internal = get_int("grep -E 'PyAPI_(FUNC|DATA)' Include/internal/*.h|wc -l")
+        internal = get_int("grep 'PyAPI_FUNC' Include/internal/*.h|wc -l")
         line = [name, public, private, internal, total]
         lines.append(line)
     table_compute_diff(lines)
@@ -225,6 +225,22 @@ The ``make smelly`` command checks for public symbols of libpython and C
 extension which are prefixed by ``Py`` or ``_Py``. See
 the ``Tools/scripts/smelly.py`` script.
     """)
+
+
+def list_variables():
+    display_title('Variables')
+    paragraph('Symbols exported with PyAPI_DATA():')
+    lines = [('Python', 'Public', 'Private', 'Internal', 'Total')]
+    for name in iter_branches():
+        total = get_int("grep 'PyAPI_DATA' Include/*.h Include/cpython/*.h Include/internal/*.h|wc -l")
+        public = get_int("grep 'PyAPI_DATA' Include/*.h Include/cpython/*.h|grep -v ' _Py'|wc -l")
+        public_private = get_int("grep 'PyAPI_DATA' Include/*.h Include/cpython/*.h|wc -l")
+        private = public_private - public
+        internal = get_int("grep 'PyAPI_DATA' Include/internal/*.h|wc -l")
+        line = [name, public, private, internal, total]
+        lines.append(line)
+    table_compute_diff(lines)
+    render_table(lines)
 
 
 def static_inline_func():
@@ -268,7 +284,8 @@ def render_page():
     main_title()
     line_numbers()
     file_numbers()
-    symbols()
+    list_functions()
+    list_variables()
     static_inline_func()
     structures()
 
