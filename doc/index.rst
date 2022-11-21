@@ -47,6 +47,7 @@ Table of Contents
    old_c_api
    type_object
    optimization_ideas
+   optimize_python
    backward_compatibility
    os_vendors
    calling_conventions
