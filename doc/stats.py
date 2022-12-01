@@ -3,6 +3,7 @@ import builtins
 import contextlib
 import functools
 import glob
+import re
 import os
 import subprocess
 import sys
@@ -24,6 +25,7 @@ BRANCHES = [
 ]
 COLUMNS = ['Python', 'Limited API', 'CPython API', 'Internal API', 'Total']
 TABLE_SPACE = '  '
+RE_IDENTIFIER = r'[A-Za-z_][A-Za-z0-9_]*'
 
 
 output = []
@@ -31,15 +33,16 @@ def log(msg=''):
     output.append(msg)
 
 
-def get_output(cmd):
+def get_output(cmd, error=True):
     proc = subprocess.run(cmd,
                           shell=True,
                           stdout=subprocess.PIPE,
-                          stderr=subprocess.DEVNULL)
+                          stderr=subprocess.DEVNULL,
+                          text=True)
     out = proc.stdout
 
     exitcode = proc.returncode
-    if exitcode:
+    if exitcode and error:
         print(f"Command failed with exit code {exitcode}")
         print(f"cmd: {cmd}")
         print(f"cwd: {os.getcwd()}")
@@ -158,6 +161,10 @@ def table_compute_diff(lines):
             pass
 
 
+def has_include_cpython(name):
+    return (name not in ('2.7', '3.6', '3.7'))
+
+
 def line_numbers():
     display_title('Line Numbers')
     paragraph('Number of C API line numbers per Python version:')
@@ -170,7 +177,7 @@ def line_numbers():
     lines = [COLUMNS]
     for name in iter_branches():
         limited = get('wc -l Include/*.h|grep total')
-        if name not in ['2.7', '3.6', '3.7']:
+        if has_include_cpython(name):
             cpython = get('wc -l Include/cpython/*.h|grep total')
         else:
             cpython = 0
@@ -243,26 +250,58 @@ def list_variables():
     render_table(lines)
 
 
+def iter_header_filenames(name):
+    if has_include_cpython(name):
+        patterns = ['Include/*.h', 'Include/cpython/*.h']
+    else:
+        patterns = ['Include/*.h']
+    for pattern in patterns:
+        yield from glob.glob(pattern)
+
+
+def cat_files(filenames):
+    for filename in filenames:
+        with open(filename, encoding='utf-8') as fp:
+            yield fp.read()
+
+def grep(regex, files, group=0):
+    for content in files:
+        for match in regex.finditer(content):
+            yield match.group(group)
+
+
 def static_inline_func():
     display_title('Functions defined as macros and static inline functions')
     paragraph('Functions defined as macros (only public) and static inline functions (public or private):')
 
     lines = [('Python', 'Macro', 'Static inline', 'Total')]
     for name in iter_branches():
-        macros = get_int("grep -E 'define P[Yy][A-Za-z_]+ *\(' Include/*.h Include/cpython/*.h|wc -l")
-        static_inline = get_int("grep 'static inline ' Include/*.h Include/cpython/*.h|grep -v pydtrace|grep -v 'define Py_LOCAL_INLINE'|wc -l")
+        if has_include_cpython(name):
+            headers = 'Include/*.h Include/cpython/*.h'
+        else:
+            headers = 'Include/*.h'
 
-        line = [name, macros, static_inline, macros + static_inline]
+        args = r'[a-zA-Z][a-zA-Z_, ]*'
+        regex = re.compile(fr'^ *# *define (P[Yy][A-Za-z_]+) *\( *{args}\)', re.MULTILINE)
+        files = cat_files(iter_header_filenames(name))
+        macros = set(grep(regex, files, group=1))
+
+        regex = re.compile(fr'^static inline [^(\n]+ ({RE_IDENTIFIER}) *\(', re.MULTILINE)
+        files = cat_files(iter_header_filenames(name))
+        static_inline = set(grep(regex, files, group=1))
+        # FIXME: exclude 'pydtrace'?
+
+        # Remove macros only used to cast arguments types. Like:
+        # "static inline void Py_INCREF(...) { ...}"
+        # "#define Py_INCREF(obj) Py_INCREF(_PyObject_CAST(obj))"
+        # Only count 1 static inline function, ignore the macro.
+        macros = macros - static_inline
+
+        line = [name, len(macros), len(static_inline),
+                len(macros) + len(static_inline)]
         lines.append(line)
     table_compute_diff(lines)
     render_table(lines)
-
-    paragraph("""
-If a function is defined as a private static inline function and exposed as a
-public macro, it is counted twice in this table. For example, the public
-Py_INCREF() macro and the private _Py_INCREF() static inline functions are
-counted as 2 functions, whereas only the "Py_INCREF" name is public.
-    """)
 
 
 def structures():
