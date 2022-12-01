@@ -1,14 +1,12 @@
 #!/usr/bin/python
-import builtins
 import contextlib
-import functools
 import glob
 import re
 import os
 import subprocess
 import sys
 
-from pythoncapi import files, PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API, get_types
+from pythoncapi import list_files, PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API, get_types
 
 
 RST_FILENAME = 'stats.rst'
@@ -200,9 +198,9 @@ def file_numbers():
     paragraph('Number of header file numbers per Python version:')
     lines = [COLUMNS]
     for name in iter_branches():
-        limited = len(files(PATH_LIMITED_API))
-        cpython = len(files(PATH_CPYTHON_API))
-        internal = len(files(PATH_INTERNAL_API))
+        limited = len(list_files(PATH_LIMITED_API))
+        cpython = len(list_files(PATH_CPYTHON_API))
+        internal = len(list_files(PATH_INTERNAL_API))
         line = [name, limited, cpython, internal, limited + cpython + internal]
         lines.append(line)
     table_compute_diff(lines)
@@ -250,22 +248,20 @@ def list_variables():
     render_table(lines)
 
 
-def iter_header_filenames(name):
-    if has_include_cpython(name):
+def iter_header_filenames():
+    if os.path.exists('Include/cpython'):
         patterns = ['Include/*.h', 'Include/cpython/*.h']
     else:
-        patterns = ['Include/*.h']
+        patterns = []
     for pattern in patterns:
         yield from glob.glob(pattern)
 
 
-def cat_files(filenames):
+def grep(regex, filenames, group=0):
     for filename in filenames:
         with open(filename, encoding='utf-8') as fp:
-            yield fp.read()
+            content = fp.read()
 
-def grep(regex, files, group=0):
-    for content in files:
         for match in regex.finditer(content):
             yield match.group(group)
 
@@ -276,18 +272,13 @@ def static_inline_func():
 
     lines = [('Python', 'Macro', 'Static inline', 'Total')]
     for name in iter_branches():
-        if has_include_cpython(name):
-            headers = 'Include/*.h Include/cpython/*.h'
-        else:
-            headers = 'Include/*.h'
+        files = list_files(PATH_LIMITED_API) + list_files(PATH_CPYTHON_API)
 
         args = r'[a-zA-Z][a-zA-Z_, ]*'
         regex = re.compile(fr'^ *# *define (P[Yy][A-Za-z_]+) *\( *{args}\)', re.MULTILINE)
-        files = cat_files(iter_header_filenames(name))
         macros = set(grep(regex, files, group=1))
 
         regex = re.compile(fr'^static inline [^(\n]+ ({RE_IDENTIFIER}) *\(', re.MULTILINE)
-        files = cat_files(iter_header_filenames(name))
         static_inline = set(grep(regex, files, group=1))
         # FIXME: exclude 'pydtrace'?
 

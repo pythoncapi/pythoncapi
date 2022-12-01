@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import os.path
-import re
 import sys
 
 from pythoncapi import PATH_LIMITED_API, PATH_CPYTHON_API, get_types

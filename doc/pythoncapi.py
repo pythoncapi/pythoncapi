@@ -33,7 +33,9 @@ TYPEDEFS = {
 }
 
 
-def files(path):
+def list_files(path):
+    if not os.path.exists(path):
+        return []
     return glob.glob(os.path.join(path, '*.h'))
 
 
@@ -66,6 +68,6 @@ def _get_types(filename, names):
 
 def get_types(directory):
     names = set()
-    for filename in files(directory):
+    for filename in list_files(directory):
         _get_types(filename, names)
     return sorted(names)
