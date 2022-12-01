@@ -41,6 +41,10 @@ def _get_types(filename, names):
     if 'pthread_stubs.h' in filename:
         # skip special header file used by WASM
         return
+    if os.path.basename(filename) == 'pystats.h':
+        # skip Include/pystats.h which is code only used if Python is built
+        # with --enable-pystats (if the Py_STATS macro is defined)
+        return
 
     with open(filename, encoding="utf-8") as fp:
         content = fp.read()
