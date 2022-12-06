@@ -100,4 +100,10 @@ def get_macros_static_inline_funcs():
     # Only count 1 static inline function, ignore the macro.
     macros = macros - funcs
 
+    for name in list(macros):
+        # In Python 3.10, the Py_INCREF() was wrapping the _Py_INCREF() static
+        # inline function.
+        if f"_{name}" in funcs:
+            macros.discard(name)
+
     return (macros, funcs)
