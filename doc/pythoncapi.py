@@ -86,8 +86,9 @@ def grep(regex, filenames, group=0):
 def get_macros_static_inline_funcs():
     files = list_files(PATH_LIMITED_API) + list_files(PATH_CPYTHON_API)
 
-    args = r'[a-zA-Z][a-zA-Z_, ]*'
-    regex = re.compile(fr'^ *# *define (P[Yy][A-Za-z_]+) *\( *{args}\)', re.MULTILINE)
+    # Match '#define func('
+    # Don't match '#define constant (&obj)': space before '('
+    regex = re.compile(fr'^ *# *define (P[Yy][A-Za-z_]+)\(', re.MULTILINE)
     macros = set(grep(regex, files, group=1))
 
     regex = re.compile(fr'^static inline [^(\n]+ ({RE_IDENTIFIER}) *\(', re.MULTILINE)
