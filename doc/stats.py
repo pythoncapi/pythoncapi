@@ -6,7 +6,7 @@ import os
 import subprocess
 import sys
 
-from pythoncapi import list_files, PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API, get_types
+from pythoncapi import list_files, PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API, get_types, get_macros_static_inline_funcs
 
 
 RST_FILENAME = 'stats.rst'
@@ -23,7 +23,6 @@ BRANCHES = [
 ]
 COLUMNS = ['Python', 'Limited API', 'CPython API', 'Internal API', 'Total']
 TABLE_SPACE = '  '
-RE_IDENTIFIER = r'[A-Za-z_][A-Za-z0-9_]*'
 
 
 output = []
@@ -257,36 +256,13 @@ def iter_header_filenames():
         yield from glob.glob(pattern)
 
 
-def grep(regex, filenames, group=0):
-    for filename in filenames:
-        with open(filename, encoding='utf-8') as fp:
-            content = fp.read()
-
-        for match in regex.finditer(content):
-            yield match.group(group)
-
-
 def static_inline_func():
     display_title('Functions defined as macros and static inline functions')
     paragraph('Functions defined as macros (only public) and static inline functions (public or private):')
 
     lines = [('Python', 'Macro', 'Static inline', 'Total')]
     for name in iter_branches():
-        files = list_files(PATH_LIMITED_API) + list_files(PATH_CPYTHON_API)
-
-        args = r'[a-zA-Z][a-zA-Z_, ]*'
-        regex = re.compile(fr'^ *# *define (P[Yy][A-Za-z_]+) *\( *{args}\)', re.MULTILINE)
-        macros = set(grep(regex, files, group=1))
-
-        regex = re.compile(fr'^static inline [^(\n]+ ({RE_IDENTIFIER}) *\(', re.MULTILINE)
-        static_inline = set(grep(regex, files, group=1))
-        # FIXME: exclude 'pydtrace'?
-
-        # Remove macros only used to cast arguments types. Like:
-        # "static inline void Py_INCREF(...) { ...}"
-        # "#define Py_INCREF(obj) Py_INCREF(_PyObject_CAST(obj))"
-        # Only count 1 static inline function, ignore the macro.
-        macros = macros - static_inline
+        macros, static_inline = get_macros_static_inline_funcs()
 
         line = [name, len(macros), len(static_inline),
                 len(macros) + len(static_inline)]

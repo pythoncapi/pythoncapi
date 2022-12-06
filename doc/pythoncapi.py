@@ -16,6 +16,7 @@ PATH_LIMITED_API = 'Include'
 PATH_CPYTHON_API = os.path.join('Include', 'cpython')
 PATH_INTERNAL_API = os.path.join('Include', 'internal')
 
+RE_IDENTIFIER = r'[A-Za-z_][A-Za-z0-9_]*'
 RE_STRUCT_START = re.compile(r'^(?:typedef +)?struct(?: +([A-Za-z0-9_]+))? *{', re.MULTILINE)
 RE_STRUCT_END = re.compile(r'^}(?: +([A-Za-z0-9_]+))? *;', re.MULTILINE)
 
@@ -71,3 +72,32 @@ def get_types(directory):
     for filename in list_files(directory):
         _get_types(filename, names)
     return sorted(names)
+
+
+def grep(regex, filenames, group=0):
+    for filename in filenames:
+        with open(filename, encoding='utf-8') as fp:
+            content = fp.read()
+
+        for match in regex.finditer(content):
+            yield match.group(group)
+
+
+def get_macros_static_inline_funcs():
+    files = list_files(PATH_LIMITED_API) + list_files(PATH_CPYTHON_API)
+
+    args = r'[a-zA-Z][a-zA-Z_, ]*'
+    regex = re.compile(fr'^ *# *define (P[Yy][A-Za-z_]+) *\( *{args}\)', re.MULTILINE)
+    macros = set(grep(regex, files, group=1))
+
+    regex = re.compile(fr'^static inline [^(\n]+ ({RE_IDENTIFIER}) *\(', re.MULTILINE)
+    funcs = set(grep(regex, files, group=1))
+    # FIXME: exclude 'pydtrace'?
+
+    # Remove macros only used to cast arguments types. Like:
+    # "static inline void Py_INCREF(...) { ...}"
+    # "#define Py_INCREF(obj) Py_INCREF(_PyObject_CAST(obj))"
+    # Only count 1 static inline function, ignore the macro.
+    macros = macros - funcs
+
+    return (macros, funcs)
