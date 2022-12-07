@@ -93,7 +93,6 @@ def get_macros_static_inline_funcs():
 
     regex = re.compile(fr'^static inline [^(\n]+ ({RE_IDENTIFIER}) *\(', re.MULTILINE)
     funcs = set(grep(regex, files, group=1))
-    # FIXME: exclude 'pydtrace'?
 
     # Remove macros only used to cast arguments types. Like:
     # "static inline void Py_INCREF(...) { ...}"
@@ -106,5 +105,10 @@ def get_macros_static_inline_funcs():
         # inline function.
         if f"_{name}" in funcs:
             macros.discard(name)
+
+    # Remove PyDTrace_xxx functions
+    for name in list(funcs):
+        if name.startswith("PyDTrace_"):
+            funcs.discard(name)
 
     return (macros, funcs)
