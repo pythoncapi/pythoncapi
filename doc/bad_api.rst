@@ -78,12 +78,12 @@ See also :ref:`functions steal references <steal-ref>`.
 Functions
 ^^^^^^^^^
 
-* ``PyCell_GET()``
-* ``PyDict_GetItem()``
-* ``PyDict_GetItemString()``
-* ``PyDict_GetItemWithError()``
+* ``PyCell_GET()``: use ``PyCell_Get()``
+* ``PyDict_GetItem()``: use ``PyObject_GetItem()``
+* ``PyDict_GetItemString()``: use ``PyObject_GetItem()``
+* ``PyDict_GetItemWithError()``: use ``PyObject_GetItem()``
 * ``PyDict_SetDefault()``
-* ``PyErr_Occurred()``
+* ``PyErr_Occurred()``: use ``PyErr_GetRaisedException()``
 * ``PyEval_GetBuiltins()``
 * ``PyEval_GetFrame()``
 * ``PyEval_GetGlobals()``
@@ -97,8 +97,8 @@ Functions
 * ``PyImport_GetModuleDict()``
 * ``PyInstanceMethod_Function()``
 * ``PyInstanceMethod_GET_FUNCTION()``
-* ``PyList_GET_ITEM()``
-* ``PyList_GetItem()``
+* ``PyList_GET_ITEM()``: use ``PySequence_GetItem()``
+* ``PyList_GetItem()``: use ``PySequence_GetItem()``
 * ``PyMethod_Function()``
 * ``PyMethod_GET_FUNCTION()``
 * ``PyMethod_GET_SELF()``
@@ -113,8 +113,8 @@ Functions
 * ``PySys_GetObject()``
 * ``PySys_GetXOptions()``
 * ``PyThreadState_GetDict()``
-* ``PyTuple_GET_ITEM()``
-* ``PyTuple_GetItem()``
+* ``PyTuple_GET_ITEM()``: use ``PySequence_GetItem()``
+* ``PyTuple_GetItem()``: use ``PySequence_GetItem()``
 * ``PyWeakref_GET_OBJECT()``
 * ``PyWeakref_GetObject()``: see https://mail.python.org/pipermail/python-dev/2016-October/146604.html
 * ``Py_TYPE()``: use ``PyObject_Type()``
@@ -124,9 +124,12 @@ Raw pointer without relase function
 
 * ``PyBytes_AS_STRING()``
 * ``PyBytes_AsString()``
+* ``PyByteArray_AS_STRING()``
+* ``PyByteArray_AsString()``
 * ``PyEval_GetFuncName()``
 * ``PyUnicode_AsUTF8()``
 * ``PyUnicode_AsUTF8AndSize()``
+* ``PyCapsule_GetName()``
 
 
 .. _py-type:
@@ -290,18 +293,19 @@ See also ``PyLong_AsLongAndOverflow()``.
 Functions stealing references
 =============================
 
+* ``PyCell_SET(op, value)``: *value*, use ``PyCell_Set()``
 * ``PyContextVar_Reset()``: *token*
 * ``PyContext_Exit()``: *ctx*
 * ``PyErr_Restore()``: *type*, *value*, *traceback*
-* ``PyList_SET_ITEM()``
-* ``PyList_SetItem()``
+* ``PyList_SET_ITEM(op, index, value)``: *value*
+* ``PyList_SetItem(op, i, newitem)``: *newitem*
 * ``PyModule_AddObject()``: *o* on success, no change on error!
 * ``PySet_Discard()``: *key*, no effect if key not found
 * ``PyString_ConcatAndDel()``: *newpart*
-* ``PyTuple_SET_ITEM()``
-* ``PyTuple_SetItem()``
-* ``Py_DECREF()``: *o*
-* ``Py_XDECREF()``: *o* if *o* is not NULL
+* ``PyTuple_SET_ITEM(op, index, value)``: *value*
+* ``PyTuple_SetItem(op, i, newitem)``: *newitem*
+* ``Py_DECREF(op)``: *op*
+* ``Py_XDECREF(op)``: *op* if *op* is not NULL
 
 Border line API:
 
