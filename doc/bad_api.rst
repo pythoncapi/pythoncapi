@@ -78,59 +78,54 @@ See also :ref:`functions steal references <steal-ref>`.
 Functions
 ^^^^^^^^^
 
+* ``PyCell_GET()``
 * ``PyDict_GetItem()``
-* ``PyDict_GetItemWithError()``
 * ``PyDict_GetItemString()``
+* ``PyDict_GetItemWithError()``
 * ``PyDict_SetDefault()``
 * ``PyErr_Occurred()``
 * ``PyEval_GetBuiltins()``
-* ``PyEval_GetFuncName()``: return  the internal ``const char*`` inside a
-   borrowed reference to a function ``__name__``.
-* ``PyFile_Name()``
+* ``PyEval_GetFrame()``
+* ``PyEval_GetGlobals()``
+* ``PyEval_GetLocals()``
+* ``PyFunction_GetAnnotations()``
 * ``PyFunction_GetClosure()``
 * ``PyFunction_GetCode()``
 * ``PyFunction_GetDefaults()``
 * ``PyFunction_GetGlobals()``
 * ``PyFunction_GetModule()``
-* ``Py_InitModule()``
-* ``Py_InitModule3()``
-* ``Py_InitModule4()``
 * ``PyImport_GetModuleDict()``
+* ``PyInstanceMethod_Function()``
+* ``PyInstanceMethod_GET_FUNCTION()``
+* ``PyList_GET_ITEM()``
 * ``PyList_GetItem()``
-* ``PyList_SetItem()``
-* ``PyMethod_Class()``
 * ``PyMethod_Function()``
+* ``PyMethod_GET_FUNCTION()``
+* ``PyMethod_GET_SELF()``
 * ``PyMethod_Self()``
+* ``PyModuleDef_Init()``
 * ``PyModule_GetDict()``
-* ``PyNumber_Check()``
 * ``PyObject_Init()``
+* ``PySequence_Fast_GET_ITEM()``
+* ``PyState_FindModule()``
+* ``PyStructSequence_GET_ITEM()``
+* ``PyStructSequence_GetItem()``
 * ``PySys_GetObject()``
 * ``PySys_GetXOptions()``
 * ``PyThreadState_GetDict()``
+* ``PyTuple_GET_ITEM()``
 * ``PyTuple_GetItem()``
-* ``PyTuple_SetItem()``
+* ``PyWeakref_GET_OBJECT()``
 * ``PyWeakref_GetObject()``: see https://mail.python.org/pipermail/python-dev/2016-October/146604.html
 
-Macros
-------
+Raw pointer without relase function
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* ``PyCell_GET()``
-* ``PyList_GET_ITEM()``
-* ``PyList_SET_ITEM()``
-* ``PyMethod_GET_CLASS()``
-* ``PyMethod_GET_FUNCTION()``
-* ``PyMethod_GET_SELF()``
-* ``PySequence_Fast_GET_ITEM()``
-* ``PyTuple_GET_ITEM()``
-* ``PyTuple_SET_ITEM()``
-* ``PyWeakref_GET_OBJECT()``
-
-Border line
-^^^^^^^^^^^
-
-* ``Py_SETREF()``, ``Py_XSETREF()``: the caller has to manually increment the
-  reference counter of the new value
-* ``N`` format of ``Py_BuildValue()``?
+* ``PyBytes_AS_STRING()``
+* ``PyBytes_AsString()``
+* ``PyEval_GetFuncName()``
+* ``PyUnicode_AsUTF8()``
+* ``PyUnicode_AsUTF8AndSize()``
 
 
 .. _py-type:
@@ -294,14 +289,24 @@ See also ``PyLong_AsLongAndOverflow()``.
 Functions stealing references
 =============================
 
-* ``PyContext_Exit()``: *ctx*
 * ``PyContextVar_Reset()``: *token*
+* ``PyContext_Exit()``: *ctx*
 * ``PyErr_Restore()``: *type*, *value*, *traceback*
+* ``PyList_SET_ITEM()``
+* ``PyList_SetItem()``
+* ``PyModule_AddObject()``: *o* on success, no change on error!
 * ``PySet_Discard()``: *key*, no effect if key not found
 * ``PyString_ConcatAndDel()``: *newpart*
+* ``PyTuple_SET_ITEM()``
+* ``PyTuple_SetItem()``
 * ``Py_DECREF()``: *o*
-* ``Py_XDECREF()``: *o*, if *o* is not NULL
-* ``PyModule_AddObject()``: *o* on success, no change on error!
+* ``Py_XDECREF()``: *o* if *o* is not NULL
+
+Border line API:
+
+* ``Py_SETREF()``, ``Py_XSETREF()``: the caller has to manually increment the
+  reference counter of the new value
+* ``N`` format of ``Py_BuildValue()``?
 
 See also :ref:`borrowed references <borrowed-ref>`.
 
