@@ -117,6 +117,7 @@ Functions
 * ``PyTuple_GetItem()``
 * ``PyWeakref_GET_OBJECT()``
 * ``PyWeakref_GetObject()``: see https://mail.python.org/pipermail/python-dev/2016-October/146604.html
+* ``Py_TYPE()``: use ``PyObject_Type()``
 
 Raw pointer without relase function
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
