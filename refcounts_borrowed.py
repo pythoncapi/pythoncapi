@@ -19,10 +19,12 @@ def parse_refcounts(filename):
             continue
         if not header:
             continue
-        if ':PyObject*:' in line and line.endswith((':0', ':0:')):
-            func = line.split(':')[0]
-            print("Borrowed reference: %s()" % func)
-            total += 1
+        if ':PyObject*:' in line:
+            parts = line.split(':')
+            if parts[3] == '0':
+                func = parts[0]
+                print("Borrowed reference: %s()" % func)
+                total += 1
         header = False
 
     print()
