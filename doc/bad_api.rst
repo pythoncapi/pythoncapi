@@ -94,6 +94,8 @@ Functions
 * ``PyFunction_GetDefaults()``
 * ``PyFunction_GetGlobals()``
 * ``PyFunction_GetModule()``
+* ``PyImport_AddModule()``: use ``PyImport_AddModuleRef()``
+* ``PyImport_AddModuleObject()``: use ``PyImport_AddModuleRef()``
 * ``PyImport_GetModuleDict()``
 * ``PyInstanceMethod_Function()``
 * ``PyInstanceMethod_GET_FUNCTION()``
@@ -105,7 +107,6 @@ Functions
 * ``PyMethod_Self()``
 * ``PyModuleDef_Init()``
 * ``PyModule_GetDict()``
-* ``PyObject_Init()``
 * ``PySequence_Fast_GET_ITEM()``
 * ``PyState_FindModule()``
 * ``PyStructSequence_GET_ITEM()``
@@ -118,6 +119,11 @@ Functions
 * ``PyWeakref_GET_OBJECT()``
 * ``PyWeakref_GetObject()``: see https://mail.python.org/pipermail/python-dev/2016-October/146604.html
 * ``Py_TYPE()``: use ``PyObject_Type()``
+
+Misc:
+
+* ``PyObject_Init(op)`` returns *op* which is technically a borrrow reference,
+  see `GH-105944 issue <https://github.com/python/cpython/issues/105944>`_
 
 Raw pointer without relase function
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
