@@ -117,7 +117,7 @@ Functions
 * ``PyTuple_GET_ITEM()``: use ``PySequence_GetItem()``
 * ``PyTuple_GetItem()``: use ``PySequence_GetItem()``
 * ``PyWeakref_GET_OBJECT()``: use ``PyWeakref_GetRef()``
-* ``PyWeakref_GetObject()``: see ``PyWeakref_GetRef()``
+* ``PyWeakref_GetObject()``: use ``PyWeakref_GetRef()``
 * ``Py_TYPE()``: use ``PyObject_Type()``
 
 Misc:
