@@ -285,6 +285,8 @@ def structures():
         lines.append(line)
     table_compute_diff(lines)
     render_table(lines)
+    paragraph('Count also private structures like "_PyCFrame" '
+              'and structures with names not starting with Py like "_frozen".')
 
 
 def render_page():
