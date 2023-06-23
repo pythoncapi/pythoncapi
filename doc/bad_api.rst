@@ -116,8 +116,8 @@ Functions
 * ``PyThreadState_GetDict()``
 * ``PyTuple_GET_ITEM()``: use ``PySequence_GetItem()``
 * ``PyTuple_GetItem()``: use ``PySequence_GetItem()``
-* ``PyWeakref_GET_OBJECT()``
-* ``PyWeakref_GetObject()``: see https://mail.python.org/pipermail/python-dev/2016-October/146604.html
+* ``PyWeakref_GET_OBJECT()``: use ``PyWeakref_GetRef()``
+* ``PyWeakref_GetObject()``: see ``PyWeakref_GetRef()``
 * ``Py_TYPE()``: use ``PyObject_Type()``
 
 Misc:
