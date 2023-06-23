@@ -10,7 +10,7 @@ from pythoncapi import list_files, PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_A
 
 
 RST_FILENAME = 'stats.rst'
-MAIN_BRANCH = '3.12'
+MAIN_BRANCH = '3.13'
 BRANCHES = [
     '2.7',
     '3.6',
@@ -19,6 +19,7 @@ BRANCHES = [
     '3.9',
     '3.10',
     '3.11',
+    '3.12',
     'main',
 ]
 COLUMNS = ['Python', 'Limited API', 'CPython API', 'Internal API', 'Total']
