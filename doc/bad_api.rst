@@ -303,11 +303,17 @@ Functions stealing references
 * ``PyContextVar_Reset()``: *token*
 * ``PyContext_Exit()``: *ctx*
 * ``PyErr_Restore()``: *type*, *value*, *traceback*
+* ``PyErr_SetExcInfo(exc_type, exc_value, exc_tb)``: the 3 arguments
+* ``PyErr_SetRaisedException(exc)``: *exc*
+* ``PyException_SetCause(exc, cause)``: *cause*
+* ``PyException_SetContext(exc, ctx)``: *ctx*
 * ``PyList_SET_ITEM(op, index, value)``: *value*
 * ``PyList_SetItem(op, i, newitem)``: *newitem*
-* ``PyModule_AddObject()``: *o* on success, no change on error!
+* ``PyModule_AddObject()``: use ``PyModule_AddObjectRef()``
 * ``PySet_Discard()``: *key*, no effect if key not found
 * ``PyString_ConcatAndDel()``: *newpart*
+* ``PyStructSequence_SET_ITEM(op, index, value)``: *value*
+* ``PyStructSequence_SetItem(op, index, value)``: *value*
 * ``PyTuple_SET_ITEM(op, index, value)``: *value*
 * ``PyTuple_SetItem(op, i, newitem)``: *newitem*
 * ``Py_DECREF(op)``: *op*
