@@ -1,15 +1,12 @@
 import glob
 import os.path
 import re
+import subprocess
 
 
-# Checkout of Python Git repository, one directory per branch:
-#
-# - 2.7/ = Python 2.7 branch
-# - 3.6/ = Python 3.6 branch
-# - main/ = Python main branch
-# - etc.
-PYTHON_ROOT = '/home/vstinner/python'
+# Checkout of Python Git repository
+CPYTHON_URL = 'https://github.com/python/cpython'
+GIT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'cpython_git'))
 
 
 PATH_LIMITED_API = 'Include'
@@ -32,6 +29,56 @@ TYPEDEFS = {
     '_xid': '_PyCrossInterpreterData',
     '_traceback': 'PyTracebackObject',
 }
+
+
+def run_command(cmd, cwd):
+    subprocess.run(cmd,
+                   stdout=subprocess.DEVNULL,
+                   stderr=subprocess.DEVNULL,
+                   check=True,
+                   cwd=cwd)
+
+
+def git_clone():
+    if os.path.exists(GIT_DIR):
+        return
+
+    dst_name = os.path.basename(GIT_DIR)
+    cmd = ['git', 'clone', CPYTHON_URL, dst_name]
+    run_command(cwd=os.path.dirname(GIT_DIR))
+
+
+_CLEANED = False
+_FETCHED = False
+
+def git_switch_branch(branch):
+    git_clone()
+
+    global _CLEANED
+    if not _CLEANED:
+        cmd = ['git', 'clean', '-fdx']
+        run_command(cmd, cwd=GIT_DIR)
+
+        cmd = ['git', 'checkout', '.']
+        run_command(cmd, cwd=GIT_DIR)
+
+        _CLEANED = True
+
+    if branch == 'main':
+        cmd = ['git', 'switch', branch]
+        run_command(cmd, cwd=GIT_DIR)
+
+        global _FETCHED
+        if not _FETCHED:
+            cmd = ['git', 'fetch']
+            run_command(cmd, cwd=GIT_DIR)
+            _FETCHED = True
+
+        cmd = ['git', 'merge', '--ff']
+        run_command(cmd, cwd=GIT_DIR)
+    else:
+        cmd = ['git', 'checkout', branch]
+        run_command(cmd, cwd=GIT_DIR)
 
 
 def list_files(path):
@@ -67,11 +114,18 @@ def _get_types(filename, names):
         names.add(name)
 
 
-def get_types(directory):
+def get_types_path(directory):
     names = set()
     for filename in list_files(directory):
         _get_types(filename, names)
     return sorted(names)
+
+
+def get_types():
+    limited = len(get_types_path(PATH_LIMITED_API))
+    cpython = len(get_types_path(PATH_CPYTHON_API))
+    internal = len(get_types_path(PATH_INTERNAL_API))
+    return (limited, cpython, internal)
 
 
 def grep(regex, filenames, group=0):
@@ -154,8 +208,9 @@ def get_variables():
     RE_VARIABLE = (
         # 'name'
         # 'name, name2'
+        # 'name, *name2'
         fr'(?:const *)?'
-        fr'({RE_IDENTIFIER}(?:, *{RE_IDENTIFIER})*)'
+        fr'({RE_IDENTIFIER}(?:, *\*? *{RE_IDENTIFIER})*)'
         # '[]', '[256]', '[PY_EXECUTABLE_KINDS+1]'
         fr'(?:\[[^]]*\])?'
     )
@@ -224,4 +279,11 @@ def get_line_numbers():
     limited = get(PATH_LIMITED_API)
     cpython = get(PATH_CPYTHON_API)
     internal = get(PATH_INTERNAL_API)
+    return (limited, cpython, internal)
+
+
+def get_file_numbers():
+    limited = len(list_files(PATH_LIMITED_API))
+    cpython = len(list_files(PATH_CPYTHON_API))
+    internal = len(list_files(PATH_INTERNAL_API))
     return (limited, cpython, internal)

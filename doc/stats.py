@@ -3,25 +3,26 @@ import contextlib
 import os
 
 from pythoncapi import (
-    PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API,
+    GIT_DIR, git_switch_branch,
+    PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API,
     list_files,
     get_types, get_macros_static_inline_funcs,
-    get_functions, get_variables, get_line_numbers)
+    get_functions, get_variables, get_line_numbers, get_file_numbers)
 
 
-RST_FILENAME = 'stats.rst'
-MAIN_BRANCH = '3.13'
 BRANCHES = [
-    '2.7',
-    '3.6',
-    '3.7',
-    '3.8',
-    '3.9',
-    '3.10',
-    '3.11',
-    '3.12',
-    'main',
+    ('v2.7', '2.7.0'),
+    ('v3.6.0', '3.6.0'),
+    ('v3.7.0', '3.7.0'),
+    ('v3.8.0', '3.8.0'),
+    ('v3.9.0', '3.9.0'),
+    ('v3.10.0', '3.10.0'),
+    ('v3.11.0', '3.11.0'),
+    #('v3.12.0', '3.12'),
+    ('3.12', '3.12 (dev)'),
+    ('main', 'main (3.13)'),
 ]
+RST_FILENAME = os.path.normpath(os.path.join(os.path.dirname(__file__), 'stats.rst'))
 COLUMNS = ['Python', 'Limited API', 'CPython API', 'Internal API', 'Total']
 TABLE_SPACE = '  '
 
@@ -31,22 +32,11 @@ def log(msg=''):
     output.append(msg)
 
 
-@contextlib.contextmanager
-def change_directory(path):
-    old_dir = os.getcwd()
-    try:
-        os.chdir(path)
-        yield
-    finally:
-        os.chdir(old_dir)
-
-
 def iter_branches():
-    for name in BRANCHES:
-        with change_directory(name):
-            if name == 'main':
-                name = MAIN_BRANCH
-            yield name
+    for branch, version in BRANCHES:
+        git_switch_branch(branch)
+        os.chdir(GIT_DIR)
+        yield version
 
 
 def display_title(title):
@@ -155,9 +145,7 @@ def file_numbers():
     paragraph('Number of header file numbers per Python version:')
     lines = [COLUMNS]
     for name in iter_branches():
-        limited = len(list_files(PATH_LIMITED_API))
-        cpython = len(list_files(PATH_CPYTHON_API))
-        internal = len(list_files(PATH_INTERNAL_API))
+        limited, cpython, internal = get_file_numbers()
         line = [name, limited, cpython, internal, limited + cpython + internal]
         lines.append(line)
     table_compute_diff(lines)
@@ -221,10 +209,9 @@ def structures():
 
     lines = [COLUMNS]
     for name in iter_branches():
-        limited = len(get_types(PATH_LIMITED_API))
-        cpython = len(get_types(PATH_CPYTHON_API))
-        internal = len(get_types(PATH_INTERNAL_API))
-        line = [name, limited, cpython, internal, limited + cpython + internal]
+        limited, cpython, internal = get_types()
+        total = limited + cpython + internal
+        line = [name, limited, cpython, internal, total]
         lines.append(line)
     table_compute_diff(lines)
     render_table(lines)
@@ -243,14 +230,14 @@ def render_page():
 
 
 def main():
-    with change_directory(PYTHON_ROOT):
-        render_page()
+    render_page()
 
-    with open(RST_FILENAME, 'w') as fp:
+    filename = RST_FILENAME
+    with open(filename, 'w') as fp:
         for line in output:
             print(line, file=fp)
 
-    print(f"Write into {RST_FILENAME}")
+    print(f"Write into {filename}")
 
 
 
