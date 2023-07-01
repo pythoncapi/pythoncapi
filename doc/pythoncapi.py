@@ -112,3 +112,95 @@ def get_macros_static_inline_funcs():
             funcs.discard(name)
 
     return (macros, funcs)
+
+
+def get_functions():
+    regex = re.compile(
+        # 'PyAPI_FUNC(int) '
+        fr'PyAPI_FUNC\([^)]+\)[ |\n]*'
+        # '_Py_NO_RETURN '
+        fr'(?:{RE_IDENTIFIER}+[ |\n]+)*'
+        # 'PyLong_FromLong('
+        fr'({RE_IDENTIFIER})[ |\n]*\(',
+        re.MULTILINE | re.DOTALL)
+
+    def get(path):
+        files = list_files(path)
+        return set(grep(regex, files, group=1))
+
+    limited = get(PATH_LIMITED_API)
+    cpython = get(PATH_CPYTHON_API)
+    internal = get(PATH_INTERNAL_API)
+
+    public = set()
+    private = set()
+    for name in limited | cpython:
+        if name.startswith('_Py'):
+            private.add(name)
+        else:
+            public.add(name)
+
+    return (public, private, internal)
+
+
+def get_variables():
+    regex = re.compile(
+        # 'Py_DEPRECATED(3.13) '
+        fr'^ *(?:Py_DEPRECATED\([^)]+\) *)?'
+        # 'PyAPI_DATA' ... ';'
+        fr'PyAPI_DATA.*;',
+        re.MULTILINE)
+
+    RE_VARIABLE = (
+        # 'name'
+        # 'name, name2'
+        fr'(?:const *)?'
+        fr'({RE_IDENTIFIER}(?:, *{RE_IDENTIFIER})*)'
+        # '[]', '[256]', '[PY_EXECUTABLE_KINDS+1]'
+        fr'(?:\[[^]]*\])?'
+    )
+
+    RE_FUNC = (
+        # '(*name) (' ... ')'
+        # '*(*name) (' ... ')'
+        # 'name (' ... ')'
+        fr'(?:\*? *\( *\* *({RE_IDENTIFIER}) *\)|({RE_IDENTIFIER})) *\([^)]*\)'
+    )
+
+    regex2 = re.compile(
+        # 'PyAPI_FUNC(int) '
+        fr'PyAPI_DATA\([^)]+\) +'
+        # 'Py_VerboseFlag;'
+        fr'(?:{RE_VARIABLE}|{RE_FUNC}) *;',
+        re.MULTILINE)
+
+    def get(path):
+        files = list_files(path)
+        names = set()
+        for line in grep(regex, files):
+            match = regex2.search(line)
+            if match is None:
+                raise ValueError(f'fail to parse PyAPI_DATA: {line!r}')
+            parts = match.group(1) # variable name
+            if not parts:
+                parts = match.group(2) # func 1
+            if not parts:
+                parts = match.group(3) # func 2
+            for part in parts.split(','):
+                part = part.strip()
+                names.add(part)
+        return names
+
+    limited = get(PATH_LIMITED_API)
+    cpython = get(PATH_CPYTHON_API)
+    internal = get(PATH_INTERNAL_API)
+
+    public = set()
+    private = set()
+    for name in limited | cpython:
+        if name.startswith('_Py'):
+            private.add(name)
+        else:
+            public.add(name)
+
+    return (public, private, internal)

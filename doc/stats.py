@@ -6,7 +6,10 @@ import os
 import subprocess
 import sys
 
-from pythoncapi import list_files, PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API, get_types, get_macros_static_inline_funcs
+from pythoncapi import (
+    PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API,
+    list_files,
+    get_types, get_macros_static_inline_funcs, get_functions, get_variables)
 
 
 RST_FILENAME = 'stats.rst'
@@ -211,14 +214,12 @@ def list_functions():
     display_title('Functions')
     paragraph('Functions exported with PyAPI_FUNC():')
     lines = [('Python', 'Public', 'Private', 'Internal', 'Total')]
-    for name in iter_branches():
-        total = get_int("grep 'PyAPI_FUNC' Include/*.h Include/cpython/*.h Include/internal/*.h|wc -l")
-        public = get_int("grep 'PyAPI_FUNC' Include/*.h Include/cpython/*.h|grep -v ' _Py'|wc -l")
-        public_private = get_int("grep 'PyAPI_FUNC' Include/*.h Include/cpython/*.h|wc -l")
-        private = public_private - public
-        internal = get_int("grep 'PyAPI_FUNC' Include/internal/*.h|wc -l")
-        line = [name, public, private, internal, total]
+    for branch_name in iter_branches():
+        public, private, internal = get_functions()
+        total = len(public) + len(private) + len(internal)
+        line = [branch_name, len(public), len(private), len(internal), total]
         lines.append(line)
+
     table_compute_diff(lines)
     render_table(lines)
 
@@ -237,12 +238,9 @@ def list_variables():
     paragraph('Symbols exported with PyAPI_DATA():')
     lines = [('Python', 'Public', 'Private', 'Internal', 'Total')]
     for name in iter_branches():
-        total = get_int("grep 'PyAPI_DATA' Include/*.h Include/cpython/*.h Include/internal/*.h|wc -l")
-        public = get_int("grep 'PyAPI_DATA' Include/*.h Include/cpython/*.h|grep -v ' _Py'|wc -l")
-        public_private = get_int("grep 'PyAPI_DATA' Include/*.h Include/cpython/*.h|wc -l")
-        private = public_private - public
-        internal = get_int("grep 'PyAPI_DATA' Include/internal/*.h|wc -l")
-        line = [name, public, private, internal, total]
+        public, private, internal = get_variables()
+        total = len(public) + len(private) + len(internal)
+        line = [name, len(public), len(private), len(internal), total]
         lines.append(line)
     table_compute_diff(lines)
     render_table(lines)
