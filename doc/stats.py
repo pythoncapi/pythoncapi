@@ -1,15 +1,12 @@
 #!/usr/bin/python
 import contextlib
-import glob
-import re
 import os
-import subprocess
-import sys
 
 from pythoncapi import (
     PYTHON_ROOT, PATH_LIMITED_API, PATH_CPYTHON_API, PATH_INTERNAL_API,
     list_files,
-    get_types, get_macros_static_inline_funcs, get_functions, get_variables)
+    get_types, get_macros_static_inline_funcs,
+    get_functions, get_variables, get_line_numbers)
 
 
 RST_FILENAME = 'stats.rst'
@@ -32,36 +29,6 @@ TABLE_SPACE = '  '
 output = []
 def log(msg=''):
     output.append(msg)
-
-
-def get_output(cmd, error=True):
-    proc = subprocess.run(cmd,
-                          shell=True,
-                          stdout=subprocess.PIPE,
-                          stderr=subprocess.DEVNULL,
-                          text=True)
-    out = proc.stdout
-
-    exitcode = proc.returncode
-    if exitcode and error:
-        print(f"Command failed with exit code {exitcode}")
-        print(f"cmd: {cmd}")
-        print(f"cwd: {os.getcwd()}")
-        sys.exit(exitcode)
-
-    return out
-
-
-def get_int(cmd):
-    out = get_output(cmd)
-    try:
-        return int(out)
-    except ValueError:
-        print("Command output is not an integer")
-        print(f"cmd: {cmd}")
-        print(f"cwd: {os.getcwd()}")
-        print("stdout:", out)
-        sys.exit(1)
 
 
 @contextlib.contextmanager
@@ -170,24 +137,11 @@ def line_numbers():
     display_title('Line Numbers')
     paragraph('Number of C API line numbers per Python version:')
 
-    def get(cmd):
-        out = get_output(cmd)
-        value = out.split()[0]
-        return int(value)
-
     lines = [COLUMNS]
     for name in iter_branches():
-        limited = get('wc -l Include/*.h|grep total')
-        if has_include_cpython(name):
-            cpython = get('wc -l Include/cpython/*.h|grep total')
-        else:
-            cpython = 0
-        if name not in ['2.7', '3.6']:
-            internal = get('wc -l Include/internal/*.h|grep total')
-        else:
-            internal = 0
-
+        limited, cpython, internal = get_line_numbers()
         total = limited + cpython + internal
+
         line = [name]
         for value in (limited, cpython, internal):
             line.append(f'{format_number(value)} ({value * 100 / total:.0f}%)')
@@ -244,15 +198,6 @@ def list_variables():
         lines.append(line)
     table_compute_diff(lines)
     render_table(lines)
-
-
-def iter_header_filenames():
-    if os.path.exists('Include/cpython'):
-        patterns = ['Include/*.h', 'Include/cpython/*.h']
-    else:
-        patterns = []
-    for pattern in patterns:
-        yield from glob.glob(pattern)
 
 
 def static_inline_func():

@@ -204,3 +204,24 @@ def get_variables():
             public.add(name)
 
     return (public, private, internal)
+
+
+def get_line_number(filename):
+    with open(filename, encoding="utf-8") as fp:
+        line_number = 0
+        for _ in fp:
+            line_number += 1
+    return line_number
+
+
+def get_line_numbers():
+    def get(path):
+        line_number = 0
+        for filename in list_files(path):
+            line_number += get_line_number(filename)
+        return line_number
+
+    limited = get(PATH_LIMITED_API)
+    cpython = get(PATH_CPYTHON_API)
+    internal = get(PATH_INTERNAL_API)
+    return (limited, cpython, internal)
