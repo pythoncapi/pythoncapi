@@ -33,8 +33,8 @@ TYPEDEFS = {
 
 def run_command(cmd, cwd):
     subprocess.run(cmd,
-                   stdout=subprocess.DEVNULL,
-                   stderr=subprocess.DEVNULL,
+                   stdout=subprocess.PIPE,
+                   stderr=subprocess.PIPE,
                    check=True,
                    cwd=cwd)
 
@@ -71,6 +71,7 @@ def git_switch_branch(branch):
 
         global _FETCHED
         if not _FETCHED:
+            print(f"Update the CPython Git repository (git fetch)")
             cmd = ['git', 'fetch']
             run_command(cmd, cwd=GIT_DIR)
             _FETCHED = True

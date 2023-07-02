@@ -61,8 +61,8 @@ def _get_data():
 def get_data():
     result = []
     for branch, version in BRANCHES:
-        print(f"Parse {branch} header files")
         git_switch_branch(branch)
+        print(f"Parse {branch} header files")
         os.chdir(GIT_DIR)
         data = _get_data()
         result.append((version, data))
