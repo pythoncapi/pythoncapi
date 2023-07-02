@@ -43,9 +43,10 @@ def git_clone():
     if os.path.exists(GIT_DIR):
         return
 
+    print(f"Clone CPython Git repository: {CPYTHON_URL}")
     dst_name = os.path.basename(GIT_DIR)
     cmd = ['git', 'clone', CPYTHON_URL, dst_name]
-    run_command(cwd=os.path.dirname(GIT_DIR))
+    run_command(cmd, cwd=os.path.dirname(GIT_DIR))
 
 
 _CLEANED = False
