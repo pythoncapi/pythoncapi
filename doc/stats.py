@@ -32,13 +32,6 @@ def log(msg=''):
     output.append(msg)
 
 
-def iter_branches():
-    for branch, version in BRANCHES:
-        git_switch_branch(branch)
-        os.chdir(GIT_DIR)
-        yield version
-
-
 def display_title(title):
     log(title)
     log('=' * len(title))
@@ -48,6 +41,32 @@ def display_title(title):
 def paragraph(text):
     log(text.strip())
     log()
+
+
+class Data:
+    pass
+
+
+def _get_data():
+    data = Data()
+    data.line_numbers = get_line_numbers()
+    data.file_numbers = get_file_numbers()
+    data.functions = get_functions()
+    data.variables = get_variables()
+    data.macro_static_inline_funcs = get_macros_static_inline_funcs()
+    data.types = get_types()
+    return data
+
+
+def get_data():
+    result = []
+    for branch, version in BRANCHES:
+        print(f"Parse {branch} header files")
+        git_switch_branch(branch)
+        os.chdir(GIT_DIR)
+        data = _get_data()
+        result.append((version, data))
+    return result
 
 
 def main_title():
@@ -123,13 +142,13 @@ def has_include_cpython(name):
     return (name not in ('2.7', '3.6', '3.7'))
 
 
-def line_numbers():
+def line_numbers(results):
     display_title('Line Numbers')
     paragraph('Number of C API line numbers per Python version:')
 
     lines = [COLUMNS]
-    for name in iter_branches():
-        limited, cpython, internal = get_line_numbers()
+    for name, data in results:
+        limited, cpython, internal = data.line_numbers
         total = limited + cpython + internal
 
         line = [name]
@@ -140,26 +159,26 @@ def line_numbers():
     render_table(lines)
 
 
-def file_numbers():
+def file_numbers(results):
     display_title('File Numbers')
     paragraph('Number of header file numbers per Python version:')
     lines = [COLUMNS]
-    for name in iter_branches():
-        limited, cpython, internal = get_file_numbers()
+    for name, data in results:
+        limited, cpython, internal = data.file_numbers
         line = [name, limited, cpython, internal, limited + cpython + internal]
         lines.append(line)
     table_compute_diff(lines)
     render_table(lines)
 
 
-def list_functions():
+def list_functions(results):
     display_title('Functions')
     paragraph('Functions exported with PyAPI_FUNC():')
     lines = [('Python', 'Public', 'Private', 'Internal', 'Total')]
-    for branch_name in iter_branches():
-        public, private, internal = get_functions()
+    for name, data in results:
+        public, private, internal = data.functions
         total = len(public) + len(private) + len(internal)
-        line = [branch_name, len(public), len(private), len(internal), total]
+        line = [name, len(public), len(private), len(internal), total]
         lines.append(line)
 
     table_compute_diff(lines)
@@ -175,12 +194,12 @@ the ``Tools/scripts/smelly.py`` script.
     """)
 
 
-def list_variables():
+def list_variables(results):
     display_title('Variables')
     paragraph('Symbols exported with PyAPI_DATA():')
     lines = [('Python', 'Public', 'Private', 'Internal', 'Total')]
-    for name in iter_branches():
-        public, private, internal = get_variables()
+    for name, data in results:
+        public, private, internal = data.variables
         total = len(public) + len(private) + len(internal)
         line = [name, len(public), len(private), len(internal), total]
         lines.append(line)
@@ -188,13 +207,13 @@ def list_variables():
     render_table(lines)
 
 
-def static_inline_func():
+def static_inline_func(results):
     display_title('Functions defined as macros and static inline functions')
     paragraph('Functions defined as macros (only public) and static inline functions (public or private):')
 
     lines = [('Python', 'Macro', 'Static inline', 'Total')]
-    for name in iter_branches():
-        macros, static_inline = get_macros_static_inline_funcs()
+    for name, data in results:
+        macros, static_inline = data.macro_static_inline_funcs
 
         line = [name, len(macros), len(static_inline),
                 len(macros) + len(static_inline)]
@@ -203,13 +222,13 @@ def static_inline_func():
     render_table(lines)
 
 
-def structures():
+def structures(results):
     display_title('Structures')
     paragraph('Structures in the Python C API:')
 
     lines = [COLUMNS]
-    for name in iter_branches():
-        limited, cpython, internal = get_types()
+    for name, data in results:
+        limited, cpython, internal = data.types
         total = limited + cpython + internal
         line = [name, limited, cpython, internal, total]
         lines.append(line)
@@ -220,13 +239,15 @@ def structures():
 
 
 def render_page():
+    results = get_data()
+
     main_title()
-    line_numbers()
-    file_numbers()
-    list_functions()
-    list_variables()
-    static_inline_func()
-    structures()
+    line_numbers(results)
+    file_numbers(results)
+    list_functions(results)
+    list_variables(results)
+    static_inline_func(results)
+    structures(results)
 
 
 def main():
