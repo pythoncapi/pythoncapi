@@ -229,8 +229,8 @@ def structures(results):
     lines = [COLUMNS]
     for name, data in results:
         limited, cpython, internal = data.types
-        total = limited + cpython + internal
-        line = [name, limited, cpython, internal, total]
+        total = len(limited) + len(cpython) + len(internal)
+        line = [name, len(limited), len(cpython), len(internal), total]
         lines.append(line)
     table_compute_diff(lines)
     render_table(lines)

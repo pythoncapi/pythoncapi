@@ -130,9 +130,9 @@ def get_types_path(directory):
 
 
 def get_types():
-    limited = len(get_types_path(PATH_LIMITED_API))
-    cpython = len(get_types_path(PATH_CPYTHON_API))
-    internal = len(get_types_path(PATH_INTERNAL_API))
+    limited = get_types_path(PATH_LIMITED_API)
+    cpython = get_types_path(PATH_CPYTHON_API)
+    internal = get_types_path(PATH_INTERNAL_API)
     return (limited, cpython, internal)
 
 
