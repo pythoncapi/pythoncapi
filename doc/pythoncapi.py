@@ -182,6 +182,8 @@ def is_function_public(name):
 
 def get_functions():
     regex = re.compile(
+        # Ignore "#define PyAPI_FUNC(RTYPE) ..." (pyport.h)
+        fr'(?<!define )'
         # 'PyAPI_FUNC(int) '
         fr'PyAPI_FUNC\([^)]+\)[ |\n]*'
         # '_Py_NO_RETURN '
