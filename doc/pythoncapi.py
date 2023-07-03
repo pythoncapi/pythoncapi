@@ -86,13 +86,16 @@ def git_switch_branch(branch):
 def list_files(path):
     if not os.path.exists(path):
         return []
-    return glob.glob(os.path.join(path, '*.h'))
+    files = glob.glob(os.path.join(path, '*.h'))
+    # Don't parse pthread_stubs.h: special header file used by WASM
+    for index, name in enumerate(files):
+        if os.path.basename(name) == 'pthread_stubs.h':
+            del files[index]
+            break
+    return files
 
 
 def _get_types(filename, names):
-    if 'pthread_stubs.h' in filename:
-        # skip special header file used by WASM
-        return
     if os.path.basename(filename) == 'pystats.h':
         # skip Include/pystats.h which is code only used if Python is built
         # with --enable-pystats (if the Py_STATS macro is defined)
@@ -105,15 +108,18 @@ def _get_types(filename, names):
         struct_name = match.group(1)
         match2 = RE_STRUCT_END.search(content, match.end())
         if not match2:
-            raise Exception(f"cannot find end of: {filename}: {match.group()}")
+            raise Exception(f"{filename}: cannot find end of: {match.group()}")
         name = match2.group(1)
         if not name:
             name = struct_name
         if not name:
-            raise Exception(f"structure has no name: {filename}: {match.group()})")
+            raise Exception(f"{filename}: structure has no name: {match.group()})")
         if name in TYPEDEFS:
             name = TYPEDEFS[name]
         names.add(name)
+
+    if 'pthread_mutex_t' in names:
+        raise Exception('pthread_stubs.h was parsed')
 
 
 def get_types_path(directory):
@@ -170,6 +176,10 @@ def get_macros_static_inline_funcs():
     return (macros, funcs)
 
 
+def is_function_public(name):
+    return name.startswith(('Py', 'PY'))
+
+
 def get_functions():
     regex = re.compile(
         # 'PyAPI_FUNC(int) '
@@ -188,13 +198,17 @@ def get_functions():
     cpython = get(PATH_CPYTHON_API)
     internal = get(PATH_INTERNAL_API)
 
+    for names in (limited, cpython, internal):
+        if 'pthread_create' in names:
+            raise Exception('pthread_stubs.h was parsed')
+
     public = set()
     private = set()
     for name in limited | cpython:
-        if name.startswith('_Py'):
-            private.add(name)
-        else:
+        if is_function_public(name):
             public.add(name)
+        else:
+            private.add(name)
 
     return (public, private, internal)
 
@@ -255,10 +269,10 @@ def get_variables():
     public = set()
     private = set()
     for name in limited | cpython:
-        if name.startswith('_Py'):
-            private.add(name)
-        else:
+        if is_function_public(name):
             public.add(name)
+        else:
+            private.add(name)
 
     return (public, private, internal)
 
