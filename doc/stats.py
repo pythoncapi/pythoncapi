@@ -209,7 +209,7 @@ def list_variables(results):
 
 def static_inline_func(results):
     display_title('Functions defined as macros and static inline functions')
-    paragraph('Functions defined as macros (only public) and static inline functions (public or private):')
+    paragraph('Functions defined as macros and static inline functions:')
 
     lines = [('Python', 'Macro', 'Static inline', 'Total')]
     for name, data in results:
@@ -220,6 +220,9 @@ def static_inline_func(results):
         lines.append(line)
     table_compute_diff(lines)
     render_table(lines)
+
+    paragraph('Only count public macros and public static inline functions '
+              '(name starting with "Py" or "PY").')
 
 
 def structures(results):

@@ -31,6 +31,9 @@ TYPEDEFS = {
 }
 
 
+PUBLIC_NAME_PREFIX = ("Py", "PY")
+
+
 def run_command(cmd, cwd):
     subprocess.run(cmd,
                    stdout=subprocess.PIPE,
@@ -145,6 +148,10 @@ def grep(regex, filenames, group=0):
             yield match.group(group)
 
 
+def is_function_public(name):
+    return name.startswith(PUBLIC_NAME_PREFIX)
+
+
 def get_macros_static_inline_funcs():
     files = list_files(PATH_LIMITED_API) + list_files(PATH_CPYTHON_API)
 
@@ -173,11 +180,15 @@ def get_macros_static_inline_funcs():
         if name.startswith("PyDTrace_"):
             funcs.discard(name)
 
+    # Remove private static inline functions
+    for name in list(macros):
+        if not is_function_public(name):
+            macros.discard(name)
+    for name in list(funcs):
+        if not is_function_public(name):
+            funcs.discard(name)
+
     return (macros, funcs)
-
-
-def is_function_public(name):
-    return name.startswith(('Py', 'PY'))
 
 
 def get_functions():
