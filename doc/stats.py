@@ -207,13 +207,20 @@ def list_variables(results):
     render_table(lines)
 
 
-def static_inline_func(results):
-    display_title('Functions defined as macros and static inline functions')
-    paragraph('Functions defined as macros and static inline functions:')
+def _static_inline_func(results, public):
+    if public:
+        display_title('Public functions defined as macros and static inline functions')
+        paragraph('Public functions defined as macros and static inline functions:')
+    else:
+        display_title('Private functions defined as macros and static inline functions')
+        paragraph('Private functions defined as macros and static inline functions:')
 
     lines = [('Python', 'Macro', 'Static inline', 'Total')]
     for name, data in results:
-        macros, static_inline = data.macro_static_inline_funcs
+        if public:
+            macros, static_inline = data.macro_static_inline_funcs[:2]
+        else:
+            macros, static_inline = data.macro_static_inline_funcs[2:]
 
         line = [name, len(macros), len(static_inline),
                 len(macros) + len(static_inline)]
@@ -221,8 +228,16 @@ def static_inline_func(results):
     table_compute_diff(lines)
     render_table(lines)
 
-    paragraph('Only count public macros and public static inline functions '
-              '(name starting with "Py" or "PY").')
+    if public:
+        paragraph('Only count public macros and public static inline functions '
+                  '(names starting with "Py" or "PY").')
+    else:
+        paragraph('Only count private macros and public static inline functions '
+                  '(ignore names starting with "Py" or "PY").')
+
+def static_inline_func(results):
+    _static_inline_func(results, True)
+    _static_inline_func(results, False)
 
 
 def structures(results):

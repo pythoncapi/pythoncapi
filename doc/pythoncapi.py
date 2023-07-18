@@ -4,6 +4,14 @@ import re
 import subprocess
 
 
+EXCLUDE_HEADERS = frozenset((
+    # Don't parse pthread_stubs.h: special header file used by WASM
+    'pthread_stubs.h',
+    # Don't parse dynamic_annotations.h: not included by Python.h.
+    'dynamic_annotations.h',
+))
+
+
 # Checkout of Python Git repository
 CPYTHON_URL = 'https://github.com/python/cpython'
 GIT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'cpython_git'))
@@ -90,9 +98,8 @@ def list_files(path):
     if not os.path.exists(path):
         return []
     files = glob.glob(os.path.join(path, '*.h'))
-    # Don't parse pthread_stubs.h: special header file used by WASM
     for index, name in enumerate(files):
-        if os.path.basename(name) == 'pthread_stubs.h':
+        if os.path.basename(name) in EXCLUDE_HEADERS:
             del files[index]
             break
     return files
@@ -157,7 +164,7 @@ def get_macros_static_inline_funcs():
 
     # Match '#define func('
     # Don't match '#define constant (&obj)': space before '('
-    regex = re.compile(fr'^ *# *define (P[Yy][A-Za-z_]+)\(', re.MULTILINE)
+    regex = re.compile(fr'^ *# *define (_?P[Yy][A-Za-z_]+)\(', re.MULTILINE)
     macros = set(grep(regex, files, group=1))
 
     regex = re.compile(fr'^static inline [^(\n]+ ({RE_IDENTIFIER}) *\(', re.MULTILINE)
@@ -166,12 +173,14 @@ def get_macros_static_inline_funcs():
     # Remove macros only used to cast arguments types. Like:
     # "static inline void Py_INCREF(...) { ...}"
     # "#define Py_INCREF(obj) Py_INCREF(_PyObject_CAST(obj))"
-    # Only count 1 static inline function, ignore the macro.
+    # Only count the static inline function, ignore the macro.
     macros = macros - funcs
 
+    # In Python 3.10, the Py_INCREF() was wrapping the _Py_INCREF() static
+    # inline function.
+    # In Python 3.11, Py_NewRef() macro just calls _Py_NewRef() static inline
+    # function.
     for name in list(macros):
-        # In Python 3.10, the Py_INCREF() was wrapping the _Py_INCREF() static
-        # inline function.
         if f"_{name}" in funcs:
             macros.discard(name)
 
@@ -181,14 +190,18 @@ def get_macros_static_inline_funcs():
             funcs.discard(name)
 
     # Remove private static inline functions
+    private_macros = set()
+    private_funcs = set()
     for name in list(macros):
         if not is_function_public(name):
             macros.discard(name)
+            private_macros.add(name)
     for name in list(funcs):
         if not is_function_public(name):
             funcs.discard(name)
+            private_funcs.add(name)
 
-    return (macros, funcs)
+    return (macros, funcs, private_macros, private_funcs)
 
 
 def get_functions():
