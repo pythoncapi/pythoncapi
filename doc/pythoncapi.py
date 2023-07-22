@@ -9,6 +9,9 @@ EXCLUDE_HEADERS = frozenset((
     'pthread_stubs.h',
     # Don't parse dynamic_annotations.h: not included by Python.h.
     'dynamic_annotations.h',
+    # Skip Include/pystats.h: the code is skipped unless if Python
+    # is built with --enable-pystats (if the Py_STATS macro is defined)
+    'pystats.h',
 ))
 
 
@@ -106,11 +109,6 @@ def list_files(path):
 
 
 def _get_types(filename, names):
-    if os.path.basename(filename) == 'pystats.h':
-        # skip Include/pystats.h which is code only used if Python is built
-        # with --enable-pystats (if the Py_STATS macro is defined)
-        return
-
     with open(filename, encoding="utf-8") as fp:
         content = fp.read()
 
