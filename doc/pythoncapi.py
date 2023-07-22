@@ -101,11 +101,8 @@ def list_files(path):
     if not os.path.exists(path):
         return []
     files = glob.glob(os.path.join(path, '*.h'))
-    for index, name in enumerate(files):
-        if os.path.basename(name) in EXCLUDE_HEADERS:
-            del files[index]
-            break
-    return files
+    return [name for name in files
+            if os.path.basename(name) not in EXCLUDE_HEADERS]
 
 
 def _get_types(filename, names):
