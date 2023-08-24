@@ -18,7 +18,7 @@ Python       Limited API    CPython API  Internal API  Total
 3.10.0       9,909 (50%)    4,584 (23%)  5,519 (28%)   20,012
 3.11.0       8,733 (36%)    5,407 (22%)  10,047 (42%)  24,187
 3.12 (dev)   8,989 (28%)    5,815 (18%)  17,631 (54%)  32,435
-main (3.13)  8,749 (25%)    4,599 (13%)  21,016 (61%)  34,364
+main (3.13)  8,746 (25%)    4,478 (13%)  21,177 (62%)  34,401
 ===========  =============  ===========  ============  ======
 
 File Numbers
@@ -56,7 +56,7 @@ Python       Public      Private     Internal   Total
 3.10.0       885 (-34)   412 (same)  115 (+6)   1,412 (-28)
 3.11.0       891 (+6)    360 (-52)   176 (+61)  1,427 (+15)
 3.12 (dev)   928 (+37)   385 (+25)   177 (+1)   1,490 (+63)
-main (3.13)  938 (+10)   160 (-225)  150 (-27)  1,248 (-242)
+main (3.13)  939 (+11)   123 (-262)  165 (-12)  1,227 (-263)
 ===========  ==========  ==========  =========  ============
 
 Since Python 3.9, Python is now built with ``-fvisibility=hidden`` to avoid
@@ -82,7 +82,7 @@ Python       Public      Private   Internal  Total
 3.10.0       173 (same)  33 (-2)   13 (-1)   219 (-3)
 3.11.0       177 (+4)    32 (-1)   10 (-3)   219 (same)
 3.12 (dev)   176 (-1)    29 (-3)   12 (+2)   217 (-2)
-main (3.13)  177 (+1)    15 (-14)  13 (+1)   205 (-12)
+main (3.13)  177 (+1)    14 (-15)  19 (+7)   210 (-7)
 ===========  ==========  ========  ========  ==========
 
 Public functions defined as macros and static inline functions
@@ -122,7 +122,7 @@ Python       Macro     Static inline  Total
 3.10.0       44 (+1)   18 (+7)        62 (+8)
 3.11.0       53 (+9)   4 (-14)        57 (-5)
 3.12 (dev)   64 (+11)  7 (+3)         71 (+14)
-main (3.13)  56 (-8)   7 (same)       63 (-8)
+main (3.13)  55 (-9)   7 (same)       62 (-9)
 ===========  ========  =============  ========
 
 Only count private macros and public static inline functions (ignore names starting with "Py" or "PY").
@@ -143,7 +143,7 @@ Python       Limited API  CPython API  Internal API  Total
 3.10.0       41 (-27)     53 (+7)      91 (+53)      185 (+33)
 3.11.0       19 (-22)     75 (+22)     112 (+21)     206 (+21)
 3.12 (dev)   18 (-1)      84 (+9)      170 (+58)     272 (+66)
-main (3.13)  18 (same)    84 (same)    176 (+6)      278 (+6)
+main (3.13)  18 (same)    83 (-1)      177 (+7)      278 (+6)
 ===========  ===========  ===========  ============  =========
 
 Count also private structures like "_PyCFrame" and structures with names not starting with Py like "_frozen".
