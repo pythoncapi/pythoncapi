@@ -7,5 +7,5 @@ from pythoncapi import get_functions
 #os.chdir('/home/vstinner/python/2.7')
 os.chdir('/home/vstinner/python/main')
 public, private, internal = get_functions()
-for name in sorted(private):
+for name in sorted(internal):
     print(name)
