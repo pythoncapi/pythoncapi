@@ -23,6 +23,7 @@ GIT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'cpytho
 PATH_LIMITED_API = 'Include'
 PATH_CPYTHON_API = os.path.join('Include', 'cpython')
 PATH_INTERNAL_API = os.path.join('Include', 'internal')
+POSIXMODULE_H = 'Modules/posixmodule.h'
 
 RE_IDENTIFIER = r'[A-Za-z_][A-Za-z0-9_]*'
 RE_STRUCT_START = re.compile(r'^(?:typedef +)?struct(?: +([A-Za-z0-9_]+))? *{', re.MULTILINE)
@@ -101,8 +102,11 @@ def list_files(path):
     if not os.path.exists(path):
         return []
     files = glob.glob(os.path.join(path, '*.h'))
-    return [name for name in files
-            if os.path.basename(name) not in EXCLUDE_HEADERS]
+    if path == PATH_INTERNAL_API:
+        files.append(POSIXMODULE_H)
+    files = [name for name in files
+             if os.path.basename(name) not in EXCLUDE_HEADERS]
+    return files
 
 
 def _get_types(filename, names):
