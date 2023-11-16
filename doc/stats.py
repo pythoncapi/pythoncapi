@@ -260,10 +260,10 @@ def render_page():
     results = get_data()
 
     main_title()
-    line_numbers(results)
-    file_numbers(results)
     list_functions(results)
     list_variables(results)
+    line_numbers(results)
+    file_numbers(results)
     static_inline_func(results)
     structures(results)
 
