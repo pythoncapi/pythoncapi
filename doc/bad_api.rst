@@ -79,10 +79,10 @@ Functions
 ^^^^^^^^^
 
 * ``PyCell_GET()``: use ``PyCell_Get()``
-* ``PyDict_GetItem()``: use ``PyObject_GetItem()``
-* ``PyDict_GetItemString()``: use ``PyObject_GetItem()``
-* ``PyDict_GetItemWithError()``: use ``PyObject_GetItem()``
-* ``PyDict_SetDefault()``
+* ``PyDict_GetItem()``: use ``PyDict_GetItemRef()``
+* ``PyDict_GetItemString()``: use ``PyDict_GetItemRef()``
+* ``PyDict_GetItemWithError()``: use ``PyDict_GetItemRef()``
+* ``PyDict_SetDefault()``: use ``PyDict_SetDefaultRef()``
 * ``PyErr_Occurred()``: use ``PyErr_GetRaisedException()``
 * ``PyEval_GetBuiltins()``
 * ``PyEval_GetFrame()``
@@ -99,8 +99,8 @@ Functions
 * ``PyImport_GetModuleDict()``
 * ``PyInstanceMethod_Function()``
 * ``PyInstanceMethod_GET_FUNCTION()``
-* ``PyList_GET_ITEM()``: use ``PySequence_GetItem()``
-* ``PyList_GetItem()``: use ``PySequence_GetItem()``
+* ``PyList_GET_ITEM()``: use ``PyList_GetItemRef()``
+* ``PyList_GetItem()``: use ``PyList_GetItemRef()``
 * ``PyMethod_Function()``
 * ``PyMethod_GET_FUNCTION()``
 * ``PyMethod_GET_SELF()``
