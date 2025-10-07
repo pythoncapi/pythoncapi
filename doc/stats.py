@@ -20,7 +20,8 @@ BRANCHES = [
     ('v3.11.0', '3.11.0'),
     ('v3.12.0', '3.12.0'),
     ('v3.13.0', '3.13.0'),
-    ('main', 'main (3.14)'),
+    ('v3.14.0', '3.14.0'),
+    ('main', 'main (3.15)'),
 ]
 RST_FILENAME = os.path.normpath(os.path.join(os.path.dirname(__file__), 'stats.rst'))
 COLUMNS = ['Python', 'Limited API', 'CPython API', 'Internal API', 'Total']
