@@ -38,4 +38,7 @@ Questions:
 Small practical issue: ``Cython`` is not part of the Python 3.7 standard
 library yet.
 
+See `issue gh-89410 <https://github.com/python/cpython/issues/89410>`_:
+"[C API] Add explicit support for Cython to the C API".
+
 See also :ref:`cffi <cffi>` and :ref:`Remove the C API <remove-c-api>`.
