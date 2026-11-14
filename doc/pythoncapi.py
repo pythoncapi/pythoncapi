@@ -17,7 +17,8 @@ EXCLUDE_HEADERS = frozenset((
 
 # Checkout of Python Git repository
 CPYTHON_URL = 'https://github.com/python/cpython'
-GIT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'cpython_git'))
+#GIT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'cpython_git'))
+GIT_DIR = os.path.expanduser('~/python/main')
 
 
 PATH_LIMITED_API = 'Include'
@@ -86,8 +87,8 @@ def git_switch_branch(branch):
 
         global _FETCHED
         if not _FETCHED:
-            print(f"Update the CPython Git repository (git fetch)")
-            cmd = ['git', 'fetch']
+            print(f"Update the CPython Git repository (git pull)")
+            cmd = ['git', 'pull']
             run_command(cmd, cwd=GIT_DIR)
             _FETCHED = True
 
@@ -266,8 +267,8 @@ def get_variables():
     regex2 = re.compile(
         # 'PyAPI_FUNC(int) '
         fr'PyAPI_DATA\([^)]+\) +'
-        # 'Py_VerboseFlag;'
-        fr'(?:{RE_VARIABLE}|{RE_FUNC}) *;',
+        # 'Py_VerboseFlag;' or '*_PyOpcode_OpName[267];'
+        fr'\*? *(?:{RE_VARIABLE}|{RE_FUNC}) *(?:\[[0-9]+\])?;',
         re.MULTILINE)
 
     def get(path):
